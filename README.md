@@ -9,7 +9,7 @@ I have attempted to make the mod configurable to the extent that it can be made 
 
 ## Known Bugs
 
-Spectral Beef
+n/a
 
 ## Development
 This mod has been a learning experience for me, @abneyonline, as I attempt to wrap my head around forge mod development. As such, this mod would not have been possible without [McJty's Mod Tutorials](https://wiki.mcjty.eu), and open source projects such as [AppleSkin](https://github.com/squeek502/AppleSkin), [Botania](https://github.com/Vazkii/Botania), [Iron Chests](https://github.com/progwml6/ironchest), [Railcraft](https://github.com/Railcraft/Railcraft), and [Quark](https://github.com/Vazkii/Quark/).

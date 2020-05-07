@@ -26,7 +26,7 @@ displayURL="https://bears.zone/" #optional
 # A text field displayed in the mod UI
 #credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
-authors="abneyonline" #optional
+authors="bearsdotzone" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Adds platters from which nearby creatures and players will be fed autonomously.
