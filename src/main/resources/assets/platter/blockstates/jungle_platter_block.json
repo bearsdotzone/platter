@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "":  { "model": "platter:block/jungle_platter_block" }
+  }
+}

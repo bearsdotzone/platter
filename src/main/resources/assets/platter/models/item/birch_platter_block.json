@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/birch_platter_block",
+  "textures": {
+    "particle": "platter:block/birch_platter_block",
+    "down": "platter:block/birch_platter_block",
+    "up": "platter:block/birch_platter_block",
+    "east": "platter:block/birch_platter_block",
+    "west": "platter:block/birch_platter_block",
+    "north": "platter:block/birch_platter_block",
+    "south": "platter:block/birch_platter_block"
+  }
+}
