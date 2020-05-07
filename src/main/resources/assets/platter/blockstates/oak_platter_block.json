@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "":  { "model": "platter:block/oak_platter_block" }
+  }
+}

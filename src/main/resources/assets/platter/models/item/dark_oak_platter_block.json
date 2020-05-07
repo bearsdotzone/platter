@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/dark_oak_platter_block",
+  "textures": {
+    "particle": "platter:block/dark_oak_platter_block",
+    "down": "platter:block/dark_oak_platter_block",
+    "up": "platter:block/dark_oak_platter_block",
+    "east": "platter:block/dark_oak_platter_block",
+    "west": "platter:block/dark_oak_platter_block",
+    "north": "platter:block/dark_oak_platter_block",
+    "south": "platter:block/dark_oak_platter_block"
+  }
+}
