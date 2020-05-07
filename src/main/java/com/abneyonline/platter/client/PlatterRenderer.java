@@ -45,14 +45,12 @@ public class PlatterRenderer extends TileEntityRenderer<PlatterTile> {
         });
 
         while (items.size() > 0) {
-            matrixStackIn.push();
             ItemStack itemIn = items.pop();
 
             matrixStackIn.translate(0f, 0.0f, -0.063f);
             if (!itemIn.isEmpty()) {
                 mc.getItemRenderer().renderItem(itemIn, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
             }
-            matrixStackIn.pop();
         }
         matrixStackIn.pop();
     }
