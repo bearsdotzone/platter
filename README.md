@@ -3,7 +3,7 @@ A forge mod for Minecraft 1.15 that adds platters from which nearby creatures an
 
 In practicality, a platter, when supplied with appropriate foodstuffs, will feed a player when they are nearby and hungry in addition to feeding and breeding any animals that are nearby.
 
-Right clicking will take the item from a player's hand and stack it on the platter. Shift right clicking the platter will remove the most recently added item.
+Right clicking will take the item from a player's hand and stack it on the platter. Shift right clicking the platter will remove the most recently added item. Platters will output their fullness to comparators as you would expect and platters will disable when applied a redstone signal.
 
 I have attempted to make the mod configurable to the extent that it can be made more or less server friendly. By default, a platter will store 9 stacks and search in a 5 block "radius" for creatures to feed every 60 seconds.
 
