@@ -42,7 +42,7 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
 
     @Override
     public void tick() {
-        if (!world.isRemote()) {
+        if (!world.isRemote() && !world.isBlockPowered(getPos())) {
             tickCount += 1;
             if (tickCount >= Config.PLATTER_PERIOD.get() * 20) {
                 tickCount = 0;
