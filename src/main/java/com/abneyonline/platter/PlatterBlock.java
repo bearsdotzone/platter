@@ -18,7 +18,9 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
@@ -107,6 +109,27 @@ public class PlatterBlock extends Block {
             return new DarkOakPlatterTile();
         } else {
             return new PlatterTile();
+        }
+    }
+
+    @Override
+    public boolean hasComparatorInputOverride(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
+
+        TileEntity tileEntity = worldIn.getTileEntity(pos);
+        int toReturn = 0;
+        LazyOptional<IItemHandler> handler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+        if(handler.isPresent())
+        {
+            return ItemHandlerHelper.calcRedstoneFromInventory(handler.orElse(null));
+        }
+        else
+        {
+            return 0;
         }
     }
 
