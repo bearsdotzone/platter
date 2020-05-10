@@ -107,6 +107,12 @@ public class PlatterBlock extends Block {
             return new AcaciaPlatterTile();
         } else if (toCheck.contains("dark")) {
             return new DarkOakPlatterTile();
+        } else if (toCheck.contains("stone")) {
+            return new StonePlatterTile();
+        } else if (toCheck.contains("iron")) {
+            return new IronPlatterTile();
+        } else if (toCheck.contains("gold")) {
+            return new GoldPlatterTile();
         } else {
             return new PlatterTile();
         }

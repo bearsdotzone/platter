@@ -46,6 +46,18 @@ public class Registration {
     public static final RegistryObject<Item> dark_oak_platter_block_item = ITEMS.register("dark_oak_platter_block", () -> new BlockItem(dark_oak_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
     public static final RegistryObject<TileEntityType<DarkOakPlatterTile>> dark_oak_platter_tile = TILES.register("dark_oak_platter_block", () -> TileEntityType.Builder.create(DarkOakPlatterTile::new, dark_oak_platter_block.get()).build(null));
 
+    public static final RegistryObject<PlatterBlock> stone_platter_block = BLOCKS.register("stone_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> stone_platter_block_item = ITEMS.register("stone_platter_block", () -> new BlockItem(stone_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
+    public static final RegistryObject<TileEntityType<StonePlatterTile>> stone_platter_tile = TILES.register("stone_platter_block", () -> TileEntityType.Builder.create(StonePlatterTile::new, stone_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> iron_platter_block = BLOCKS.register("iron_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> iron_platter_block_item = ITEMS.register("iron_platter_block", () -> new BlockItem(iron_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
+    public static final RegistryObject<TileEntityType<IronPlatterTile>> iron_platter_tile = TILES.register("iron_platter_block", () -> TileEntityType.Builder.create(IronPlatterTile::new, iron_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> gold_platter_block = BLOCKS.register("gold_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> gold_platter_block_item = ITEMS.register("gold_platter_block", () -> new BlockItem(gold_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
+    public static final RegistryObject<TileEntityType<GoldPlatterTile>> gold_platter_tile = TILES.register("gold_platter_block", () -> TileEntityType.Builder.create(GoldPlatterTile::new, gold_platter_block.get()).build(null));
+
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

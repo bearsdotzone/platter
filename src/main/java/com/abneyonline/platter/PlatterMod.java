@@ -67,6 +67,9 @@ public class PlatterMod
         ClientRegistry.bindTileEntityRenderer(Registration.jungle_platter_tile.get(), PlatterRenderer::new);
         ClientRegistry.bindTileEntityRenderer(Registration.acacia_platter_tile.get(), PlatterRenderer::new);
         ClientRegistry.bindTileEntityRenderer(Registration.dark_oak_platter_tile.get(), PlatterRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(Registration.stone_platter_tile.get(), PlatterRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(Registration.iron_platter_tile.get(), PlatterRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(Registration.gold_platter_tile.get(), PlatterRenderer::new);
 
     }
 

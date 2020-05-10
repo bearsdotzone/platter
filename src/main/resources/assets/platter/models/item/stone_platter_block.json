@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/stone_platter_block",
+  "textures": {
+    "particle": "platter:block/stone_platter_block",
+    "down": "platter:block/stone_platter_block",
+    "up": "platter:block/stone_platter_block",
+    "east": "platter:block/stone_platter_block",
+    "west": "platter:block/stone_platter_block",
+    "north": "platter:block/stone_platter_block",
+    "south": "platter:block/stone_platter_block"
+  }
+}
