@@ -31,6 +31,7 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
     private long tickCount = 0;
+    protected boolean tickForAnimals = true;
 
     public PlatterTile() {
         super(Registration.oak_platter_tile.get());
@@ -59,7 +60,7 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
                         if (pe.canEat(false) && !pe.isCreative()) {
                             lpe.add(pe);
                         }
-                    } else if (p instanceof AnimalEntity) {
+                    } else if (p instanceof AnimalEntity && tickForAnimals) {
                         AnimalEntity ae = (AnimalEntity) p;
                         if (ae.canBreed() && !ae.isChild()) {
                             lae.add(ae);

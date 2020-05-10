@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "":  { "model": "platter:block/iron_platter_block" }
+  }
+}

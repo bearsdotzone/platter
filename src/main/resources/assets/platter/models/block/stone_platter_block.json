@@ -1,8 +1,8 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "textures": {
-      "platter_block": "minecraft:block/{material}",
-      "particle": "minecraft:block/{material}"
+      "platter_block": "minecraft:block/stone",
+      "particle": "minecraft:block/stone"
     },
     "display": {
       "gui": {

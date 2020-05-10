@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/gold_platter_block",
+  "textures": {
+    "particle": "platter:block/gold_platter_block",
+    "down": "platter:block/gold_platter_block",
+    "up": "platter:block/gold_platter_block",
+    "east": "platter:block/gold_platter_block",
+    "west": "platter:block/gold_platter_block",
+    "north": "platter:block/gold_platter_block",
+    "south": "platter:block/gold_platter_block"
+  }
+}

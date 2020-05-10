@@ -9,10 +9,10 @@
       "item": "minecraft:iron_bars"
     },
     "#": {
-      "item": "minecraft:{crafting}"
+      "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "item": "platter:{name}_platter_block"
+    "item": "platter:iron_platter_block"
   }
 }
