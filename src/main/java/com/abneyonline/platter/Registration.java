@@ -15,9 +15,9 @@ import static com.abneyonline.platter.PlatterMod.MODID;
 
 public class Registration {
 
-    private static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MODID);
-    private static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
-    private static final DeferredRegister<TileEntityType<?>> TILES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MODID);
+    private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    private static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MODID);
 //    private static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, MODID);
 //    private static final DeferredRegister<EntityType<?>> ENTITIES = new DeferredRegister<>(ForgeRegistries.ENTITIES, MODID);
 //    private static final DeferredRegister<ModDimension> DIMENSIONS = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, MODID);
@@ -57,6 +57,14 @@ public class Registration {
     public static final RegistryObject<PlatterBlock> gold_platter_block = BLOCKS.register("gold_platter_block", PlatterBlock::new);
     public static final RegistryObject<Item> gold_platter_block_item = ITEMS.register("gold_platter_block", () -> new BlockItem(gold_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
     public static final RegistryObject<TileEntityType<GoldPlatterTile>> gold_platter_tile = TILES.register("gold_platter_block", () -> TileEntityType.Builder.create(GoldPlatterTile::new, gold_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> crimson_platter_block = BLOCKS.register("crimson_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> crimson_platter_block_item = ITEMS.register("crimson_platter_block", () -> new BlockItem(crimson_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
+    public static final RegistryObject<TileEntityType<CrimsonPlatterTile>> crimson_platter_tile = TILES.register("crimson_platter_block", () -> TileEntityType.Builder.create(CrimsonPlatterTile::new, crimson_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> warped_platter_block = BLOCKS.register("warped_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> warped_platter_block_item = ITEMS.register("warped_platter_block", () -> new BlockItem(warped_platter_block.get(), new Item.Properties().group(ItemGroup.FOOD)));
+    public static final RegistryObject<TileEntityType<WarpedPlatterTile>> warped_platter_tile = TILES.register("warped_platter_block", () -> TileEntityType.Builder.create(WarpedPlatterTile::new, warped_platter_block.get()).build(null));
 
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());

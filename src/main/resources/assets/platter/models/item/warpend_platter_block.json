@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/warpend_platter_block",
+  "textures": {
+    "particle": "platter:block/warpend_platter_block",
+    "down": "platter:block/warpend_platter_block",
+    "up": "platter:block/warpend_platter_block",
+    "east": "platter:block/warpend_platter_block",
+    "west": "platter:block/warpend_platter_block",
+    "north": "platter:block/warpend_platter_block",
+    "south": "platter:block/warpend_platter_block"
+  }
+}

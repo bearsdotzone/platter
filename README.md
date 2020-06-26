@@ -1,5 +1,5 @@
 # Platter
-A forge mod for Minecraft 1.15 that adds platters from which nearby creatures and players will be fed autonomously.
+A forge mod for Minecraft 1.15 and 1.16 that adds platters from which nearby creatures and players will be fed autonomously.
 
 In practicality, a platter, when supplied with appropriate foodstuffs, will feed a player when they are nearby and hungry. Wooden platters will also feed and breed any animals that are nearby.
 

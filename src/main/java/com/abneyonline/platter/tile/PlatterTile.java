@@ -2,6 +2,8 @@ package com.abneyonline.platter.tile;
 
 import com.abneyonline.platter.Config;
 import com.abneyonline.platter.Registration;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -105,11 +107,13 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
         }
     }
 
+
+
     @Override
-    public void read(CompoundNBT tag) {
+    public void func_230337_a_(BlockState b, CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
         handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(invTag));
-        super.read(tag);
+        super.func_230337_a_(b, tag);
     }
 
     @Override
@@ -181,7 +185,7 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         CompoundNBT tag = pkt.getNbtCompound();
-        read(tag);
+        func_230337_a_(getBlockState(), tag);
     }
 
     @Override
@@ -191,8 +195,10 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
         return nbt;
     }
 
+    /*
     @Override
     public void handleUpdateTag(CompoundNBT tag) {
         read(tag);
     }
+    */
 }

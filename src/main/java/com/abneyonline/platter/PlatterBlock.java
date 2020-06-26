@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class PlatterBlock extends Block {
     public PlatterBlock() {
-        super(Properties.create(Material.WOOD).hardnessAndResistance(1.0f).harvestLevel(0).harvestTool(ToolType.AXE));
+        super(Properties.create(Material.WOOD).hardnessAndResistance(1.0f));
     }
 
     @Override
@@ -113,6 +113,10 @@ public class PlatterBlock extends Block {
             return new IronPlatterTile();
         } else if (toCheck.contains("gold")) {
             return new GoldPlatterTile();
+        } else if (toCheck.contains("crimson")) {
+            return new CrimsonPlatterTile();
+        } else if (toCheck.contains("warped")) {
+            return new WarpedPlatterTile();
         } else {
             return new PlatterTile();
         }
