@@ -2,6 +2,8 @@
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/platter",
 	"promos": {
 		"1.15.2-latest": "1.0.0",
-		"1.15.2-recommended": "1.0.0"
+		"1.15.2-recommended": "1.0.0",
+		"1.16.1-latest": "1.0.0",
+		"1.16.1-recommended": "1.0.0"
 	}
 }
