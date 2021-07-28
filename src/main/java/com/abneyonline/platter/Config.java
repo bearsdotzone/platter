@@ -30,13 +30,4 @@ public class Config {
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }
-
-    @SubscribeEvent
-    public static void onLoad(final ModConfig.Loading configEvent) {
-
-    }
-
-    @SubscribeEvent
-    public static void onReload(final ModConfig.Reloading configEvent) {
-    }
 }

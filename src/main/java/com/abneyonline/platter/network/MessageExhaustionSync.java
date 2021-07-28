@@ -1,8 +1,9 @@
 package com.abneyonline.platter.network;
 
 import com.abneyonline.platter.helpers.HungerHelper;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+
 
 import java.util.function.Supplier;
 
@@ -15,12 +16,12 @@ public class MessageExhaustionSync
 		this.exhaustionLevel = exhaustionLevel;
 	}
 
-	public static void encode(MessageExhaustionSync pkt, PacketBuffer buf)
+	public static void encode(MessageExhaustionSync pkt, FriendlyByteBuf buf)
 	{
 		buf.writeFloat(pkt.exhaustionLevel);
 	}
 
-	public static MessageExhaustionSync decode(PacketBuffer buf)
+	public static MessageExhaustionSync decode(FriendlyByteBuf buf)
 	{
 		return new MessageExhaustionSync(buf.readFloat());
 	}
