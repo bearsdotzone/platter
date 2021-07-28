@@ -3,6 +3,8 @@ package com.abneyonline.platter;
 import com.abneyonline.platter.tile.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
@@ -96,6 +98,19 @@ public class PlatterBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide()) {
+            return null;
+        }
+        return (level1, blockPos, blockState, t) -> {
+            if (t instanceof PlatterTile tile) {
+                tile.tickServer();
+            }
+        };
+    }
+
+    @Nullable
+    @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         String toCheck = getRegistryName().getPath();
         if (toCheck.contains("oak") && !toCheck.contains("dark")) {
@@ -116,6 +131,10 @@ public class PlatterBlock extends Block implements EntityBlock {
             return new IronPlatterTile(blockPos, blockState);
         } else if (toCheck.contains("gold")) {
             return new GoldPlatterTile(blockPos, blockState);
+        } else if (toCheck.contains("crimson")) {
+            return new CrimsonPlatterTile(blockPos, blockState);
+        } else if (toCheck.contains("warped")) {
+            return new WarpedPlatterTile(blockPos, blockState);
         } else {
             return new PlatterTile(blockPos, blockState);
         }

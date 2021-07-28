@@ -61,6 +61,14 @@ public class Registration {
     public static final RegistryObject<Item> gold_platter_block_item = ITEMS.register("gold_platter_block", () -> new BlockItem(gold_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
     public static final RegistryObject<BlockEntityType<GoldPlatterTile>> gold_platter_tile = TILES.register("gold_platter_block", () -> BlockEntityType.Builder.of(GoldPlatterTile::new, gold_platter_block.get()).build(null));
 
+    public static final RegistryObject<PlatterBlock> crimson_platter_block = BLOCKS.register("crimson_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> crimson_platter_block_item = ITEMS.register("crimson_platter_block", () -> new BlockItem(crimson_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<BlockEntityType<CrimsonPlatterTile>> crimson_platter_tile = TILES.register("crimson_platter_block", () -> BlockEntityType.Builder.of(CrimsonPlatterTile::new, crimson_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> warped_platter_block = BLOCKS.register("warped_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> warped_platter_block_item = ITEMS.register("warped_platter_block", () -> new BlockItem(warped_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<BlockEntityType<WarpedPlatterTile>> warped_platter_tile = TILES.register("warped_platter_block", () -> BlockEntityType.Builder.of(WarpedPlatterTile::new, warped_platter_block.get()).build(null));
+
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

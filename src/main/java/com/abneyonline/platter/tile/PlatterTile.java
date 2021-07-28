@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PlatterTile extends BlockEntity implements BlockEntityTicker {
+public class PlatterTile extends BlockEntity {
 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
     private long tickCount = 0;
@@ -45,8 +45,7 @@ public class PlatterTile extends BlockEntity implements BlockEntityTicker {
         super(tet, blockPos, blockState);
     }
 
-    @Override
-    public void tick(Level var1, BlockPos var2, BlockState var3, BlockEntity var4) {
+    public void tickServer() {
         if (!level.isClientSide() && !level.hasNeighborSignal(getBlockPos())) {
             tickCount += 1;
             if (tickCount >= Config.PLATTER_PERIOD.get() * 20) {
