@@ -1,33 +1,34 @@
 package com.abneyonline.platter.client;
 
 import com.abneyonline.platter.tile.PlatterTile;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.BlockState;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.model.ModelManager;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.model.data.EmptyModelData;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import java.util.ArrayDeque;
 
-public class PlatterRenderer extends TileEntityRenderer<PlatterTile> {
+import com.mojang.math.Vector3f;
 
-    public PlatterRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+public class PlatterRenderer implements BlockEntityRenderer<PlatterTile> {
+
+    public PlatterRenderer(BlockEntityRendererProvider.Context context) {
+
     }
 
     @Override
-    public void render(PlatterTile tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        matrixStackIn.push();
+    public void render(PlatterTile tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        matrixStackIn.pushPose();
 
-        matrixStackIn.rotate(new Vector3f(1f, 0f, 0f).rotationDegrees(90f));
+        matrixStackIn.mulPose(new Vector3f(1f, 0f, 0f).rotationDegrees(90f));
         matrixStackIn.translate(0.5f, 0.5f, -0.063f);
         Minecraft mc = Minecraft.getInstance();
 
@@ -46,9 +47,9 @@ public class PlatterRenderer extends TileEntityRenderer<PlatterTile> {
 
             matrixStackIn.translate(0f, 0.0f, -0.063f);
             if (!itemIn.isEmpty()) {
-                mc.getItemRenderer().renderItem(itemIn, ItemCameraTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn);
+                mc.getItemRenderer().renderStatic(itemIn, ItemTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn, 0);
             }
         }
-        matrixStackIn.pop();
+        matrixStackIn.popPose();
     }
 }

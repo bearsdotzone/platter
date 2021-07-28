@@ -2,18 +2,22 @@ package com.abneyonline.platter.tile;
 
 import com.abneyonline.platter.Config;
 import com.abneyonline.platter.Registration;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -27,42 +31,42 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PlatterTile extends TileEntity implements ITickableTileEntity {
+public class PlatterTile extends BlockEntity implements BlockEntityTicker {
 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
     private long tickCount = 0;
     protected boolean tickForAnimals = true;
 
-    public PlatterTile() {
-        super(Registration.oak_platter_tile.get());
+    public PlatterTile(BlockPos blockPos, BlockState blockState) {
+        super(Registration.oak_platter_tile.get(), blockPos, blockState);
     }
 
-    public PlatterTile(TileEntityType tet) {
-        super(tet);
+    public PlatterTile(BlockEntityType tet, BlockPos blockPos, BlockState blockState) {
+        super(tet, blockPos, blockState);
     }
 
     @Override
-    public void tick() {
-        if (!world.isRemote() && !world.isBlockPowered(getPos())) {
+    public void tick(Level var1, BlockPos var2, BlockState var3, BlockEntity var4) {
+        if (!level.isClientSide() && !level.hasNeighborSignal(getBlockPos())) {
             tickCount += 1;
             if (tickCount >= Config.PLATTER_PERIOD.get() * 20) {
                 tickCount = 0;
 
                 int radii = Config.PLATTER_RADIUS.get();
 
-                List<LivingEntity> pl = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(getPos().add(-radii, -radii, -radii), getPos().add(radii, radii, radii)));
-                ArrayList<PlayerEntity> lpe = new ArrayList<PlayerEntity>();
-                ArrayList<AnimalEntity> lae = new ArrayList<AnimalEntity>();
+                List<LivingEntity> pl = level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().offset(-radii, -radii, -radii), getBlockPos().offset(radii, radii, radii)));
+                ArrayList<Player> lpe = new ArrayList<Player>();
+                ArrayList<Animal> lae = new ArrayList<Animal>();
                 for (LivingEntity p : pl) {
-                    if (p instanceof PlayerEntity) {
-                        PlayerEntity pe = (PlayerEntity) p;
+                    if (p instanceof Player) {
+                        Player pe = (Player) p;
 
                         if (pe.canEat(false) && !pe.isCreative()) {
                             lpe.add(pe);
                         }
-                    } else if (p instanceof AnimalEntity && tickForAnimals) {
-                        AnimalEntity ae = (AnimalEntity) p;
-                        if (ae.canBreed() && !ae.isChild()) {
+                    } else if (p instanceof Animal && tickForAnimals) {
+                        Animal ae = (Animal) p;
+                        if (ae.canFallInLove() && !ae.isBaby()) {
                             lae.add(ae);
                         }
                     }
@@ -71,24 +75,24 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
                     for (int a = h.getSlots() - 1; a >= 0; a--) {
                         ItemStack retrievedItem = h.getStackInSlot(a);
 
-                        if (retrievedItem.isFood() && !lpe.isEmpty()) {
-                            Iterator<PlayerEntity> ipe = lpe.iterator();
+                        if (retrievedItem.isEdible() && !lpe.isEmpty()) {
+                            Iterator<Player> ipe = lpe.iterator();
                             while (ipe.hasNext() && (retrievedItem != ItemStack.EMPTY)) {
-                                PlayerEntity toFeed = ipe.next();
+                                Player toFeed = ipe.next();
                                 ItemStack toEat = h.extractItem(a, 1, false);
-                                toFeed.onFoodEaten(world, toEat);
+                                toFeed.eat(level, toEat);
                                 ipe.remove();
                             }
                         }
                         if (!lae.isEmpty()) {
 
-                            Iterator<AnimalEntity> iae = lae.iterator();
+                            Iterator<Animal> iae = lae.iterator();
 
                             while (iae.hasNext() && (retrievedItem != ItemStack.EMPTY)) {
-                                AnimalEntity ae = iae.next();
-                                if (ae.isBreedingItem(retrievedItem) && ae.canBreed() && ae.getGrowingAge() == 0) {
+                                Animal ae = iae.next();
+                                if (ae.isFood(retrievedItem) && ae.canFallInLove() && ae.getAge() == 0) {
                                     ItemStack toEat = h.extractItem(a, 1, false);
-                                    ae.onFoodEaten(world, toEat);
+                                    ae.eat(level, toEat);
                                     ae.setInLove(null);
                                     iae.remove();
                                 }
@@ -106,19 +110,19 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
     }
 
     @Override
-    public void read(CompoundNBT tag) {
-        CompoundNBT invTag = tag.getCompound("inv");
-        handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(invTag));
-        super.read(tag);
+    public void load(CompoundTag tag) {
+        CompoundTag invTag = tag.getCompound("inv");
+        handler.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(invTag));
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         handler.ifPresent(h -> {
-            CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+            CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
             tag.put("inv", compound);
         });
-        return super.write(tag);
+        return super.save(tag);
     }
 
     private IItemHandler createHandler() {
@@ -132,8 +136,8 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
                 if (simulate == false) {
-                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 2);
-                    markDirty();
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    setChanged();
                 }
                 return super.insertItem(slot, stack, simulate);
             }
@@ -153,8 +157,8 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
                             setStackInSlot(a, getStackInSlot(a + 1));
                         }
                     }
-                    world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 2);
-                    markDirty();
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                    setChanged();
                 }
 
                 return toReturn;
@@ -172,27 +176,27 @@ public class PlatterTile extends TileEntity implements ITickableTileEntity {
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
-        nbtTag = write(nbtTag);
-        return new SUpdateTileEntityPacket(getPos(), -1, nbtTag);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
+        nbtTag = save(nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getNbtCompound();
-        read(tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        load(tag);
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = new CompoundNBT();
-        write(nbt);
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = new CompoundTag();
+        save(nbt);
         return nbt;
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT tag) {
-        read(tag);
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
     }
 }

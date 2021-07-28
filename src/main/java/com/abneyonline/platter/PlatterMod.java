@@ -2,22 +2,22 @@ package com.abneyonline.platter;
 
 import com.abneyonline.platter.client.PlatterRenderer;
 import com.abneyonline.platter.network.SyncHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
+import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
@@ -61,15 +61,15 @@ public class PlatterMod
         // do something that can only be done on the client
 //        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
 
-        ClientRegistry.bindTileEntityRenderer(Registration.oak_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.spruce_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.birch_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.jungle_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.acacia_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.dark_oak_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.stone_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.iron_platter_tile.get(), PlatterRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(Registration.gold_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.oak_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.spruce_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.birch_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.jungle_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.acacia_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.dark_oak_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.stone_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.iron_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.gold_platter_tile.get(), PlatterRenderer::new);
 
     }
 
