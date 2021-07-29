@@ -1,7 +1,6 @@
 package com.abneyonline.platter.network;
 
 import com.abneyonline.platter.PlatterMod;
-import com.abneyonline.platter.helpers.HungerHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,11 +19,11 @@ public class SyncHandler
 {
 	private static final String PROTOCOL_VERSION = Integer.toString(1);
 	public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
-		.named(new ResourceLocation(PlatterMod.MODID, "sync"))
-		.clientAcceptedVersions(s -> true)
-		.serverAcceptedVersions(s -> true)
-		.networkProtocolVersion(() -> PROTOCOL_VERSION)
-		.simpleChannel();
+			.named(new ResourceLocation(PlatterMod.MODID, "sync"))
+			.clientAcceptedVersions(s -> true)
+			.serverAcceptedVersions(s -> true)
+			.networkProtocolVersion(() -> PROTOCOL_VERSION)
+			.simpleChannel();
 
 	public static void init()
 	{
@@ -58,7 +57,7 @@ public class SyncHandler
 			lastSaturationLevels.put(player.getUUID(), player.getFoodData().getSaturationLevel());
 		}
 
-		float exhaustionLevel = HungerHelper.getExhaustion(player);
+		float exhaustionLevel = player.getFoodData().getExhaustionLevel();
 		if (lastExhaustionLevel == null || Math.abs(lastExhaustionLevel - exhaustionLevel) >= 0.01f)
 		{
 			Object msg = new MessageExhaustionSync(exhaustionLevel);
