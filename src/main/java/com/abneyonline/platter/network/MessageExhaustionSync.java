@@ -1,6 +1,5 @@
 package com.abneyonline.platter.network;
 
-import com.abneyonline.platter.helpers.HungerHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
@@ -29,7 +28,7 @@ public class MessageExhaustionSync
 	public static void handle(final MessageExhaustionSync message, Supplier<NetworkEvent.Context> ctx)
 	{
 		ctx.get().enqueueWork(() -> {
-			HungerHelper.setExhaustion(NetworkHelper.getSidedPlayer(ctx.get()), message.exhaustionLevel);
+			NetworkHelper.getSidedPlayer(ctx.get()).getFoodData().setExhaustion(message.exhaustionLevel);
 		});
 		ctx.get().setPacketHandled(true);
 	}
