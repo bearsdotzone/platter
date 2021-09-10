@@ -20,8 +20,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.extensions.IForgeBlock;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -33,7 +31,7 @@ import java.util.ArrayList;
 
 public class PlatterBlock extends Block implements EntityBlock {
     public PlatterBlock() {
-        super(Properties.of(Material.WOOD).strength(1.0f).harvestLevel(0).harvestTool(ToolType.AXE));
+        super(Properties.of(Material.WOOD).strength(1.0f));
     }
 
     @Override
