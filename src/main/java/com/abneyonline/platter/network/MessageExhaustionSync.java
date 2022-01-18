@@ -1,9 +1,7 @@
 package com.abneyonline.platter.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-
-
+import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class MessageExhaustionSync
@@ -31,5 +29,6 @@ public class MessageExhaustionSync
 			NetworkHelper.getSidedPlayer(ctx.get()).getFoodData().setExhaustion(message.exhaustionLevel);
 		});
 		ctx.get().setPacketHandled(true);
+
 	}
 }

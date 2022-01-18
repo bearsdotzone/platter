@@ -16,8 +16,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
-import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
+//import net.minecraftforge.fmlclient.registry.ClientRegistry;
+//import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
+import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
@@ -90,7 +92,7 @@ public class PlatterMod
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
+    public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
 //        LOGGER.info("HELLO from server starting");
     }
