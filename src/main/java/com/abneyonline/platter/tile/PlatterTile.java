@@ -33,7 +33,8 @@ import java.util.List;
 
 public class PlatterTile extends BlockEntity {
 
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
+    private final ItemStackHandler inputItems = createHandler();
+    private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> inputItems);
     private long tickCount = 0;
     protected boolean tickForAnimals = true;
 
@@ -110,21 +111,16 @@ public class PlatterTile extends BlockEntity {
 
     @Override
     public void load(CompoundTag tag) {
-        CompoundTag invTag = tag.getCompound("inv");
-        handler.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(invTag));
         super.load(tag);
+        inputItems.deserializeNBT(tag.getCompound("inv"));
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
-        handler.ifPresent(h -> {
-            CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
-            tag.put("inv", compound);
-        });
-        return super.save(tag);
+    public void saveAdditional(CompoundTag tag) {
+        tag.put("inv", inputItems.serializeNBT());
     }
 
-    private IItemHandler createHandler() {
+    private ItemStackHandler createHandler() {
         return new ItemStackHandler(Config.PLATTER_SLOTS.get()) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
@@ -176,9 +172,7 @@ public class PlatterTile extends BlockEntity {
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        nbtTag = save(nbtTag);
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -190,12 +184,12 @@ public class PlatterTile extends BlockEntity {
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag nbt = new CompoundTag();
-        save(nbt);
+        saveAdditional(nbt);
         return nbt;
     }
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
-        load(tag);
+        if (tag != null) { load(tag); }
     }
 }
