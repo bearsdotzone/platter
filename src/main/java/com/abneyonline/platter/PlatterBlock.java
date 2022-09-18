@@ -1,25 +1,25 @@
 package com.abneyonline.platter;
 
 import com.abneyonline.platter.tile.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Containers;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -110,28 +110,28 @@ public class PlatterBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        String toCheck = getRegistryName().getPath();
-        if (toCheck.contains("oak") && !toCheck.contains("dark")) {
+        String toCheck = getName().getString();
+        if (toCheck.contains("Oak") && !toCheck.contains("Dark")) {
             return new OakPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("spruce")) {
+        } else if (toCheck.contains("Spruce")) {
             return new SprucePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("birch")) {
+        } else if (toCheck.contains("Birch")) {
             return new BirchPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("jungle")) {
+        } else if (toCheck.contains("Jungle")) {
             return new JunglePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("acacia")) {
+        } else if (toCheck.contains("Acacia")) {
             return new AcaciaPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("dark")) {
+        } else if (toCheck.contains("Dark")) {
             return new DarkOakPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("stone")) {
+        } else if (toCheck.contains("Stone")) {
             return new StonePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("iron")) {
+        } else if (toCheck.contains("Iron")) {
             return new IronPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("gold")) {
+        } else if (toCheck.contains("Gold")) {
             return new GoldPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("crimson")) {
+        } else if (toCheck.contains("Crimson")) {
             return new CrimsonPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("warped")) {
+        } else if (toCheck.contains("Warped")) {
             return new WarpedPlatterTile(blockPos, blockState);
         } else {
             return new PlatterTile(blockPos, blockState);
