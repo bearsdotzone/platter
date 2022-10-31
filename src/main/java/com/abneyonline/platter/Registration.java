@@ -1,6 +1,7 @@
 package com.abneyonline.platter;
 
 import com.abneyonline.platter.tile.*;
+import joptsimple.internal.AbbreviationMap;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -69,6 +70,10 @@ public class Registration {
     public static final RegistryObject<PlatterBlock> warped_platter_block = BLOCKS.register("warped_platter_block", PlatterBlock::new);
     public static final RegistryObject<Item> warped_platter_block_item = ITEMS.register("warped_platter_block", () -> new BlockItem(warped_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
     public static final RegistryObject<BlockEntityType<WarpedPlatterTile>> warped_platter_tile = TILES.register("warped_platter_block", () -> BlockEntityType.Builder.of(WarpedPlatterTile::new, warped_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> mangrove_platter_block = BLOCKS.register("mangrove_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> mangrove_platter_block_item = ITEMS.register("mangrove_platter_block", () -> new BlockItem(mangrove_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<BlockEntityType<MangrovePlatterTile>> mangrove_platter_tile = TILES.register("mangrove_platter_block", () -> BlockEntityType.Builder.of(MangrovePlatterTile::new, mangrove_platter_block.get()).build(null));
 
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
