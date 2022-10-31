@@ -133,6 +133,8 @@ public class PlatterBlock extends Block implements EntityBlock {
             return new CrimsonPlatterTile(blockPos, blockState);
         } else if (toCheck.contains("Warped")) {
             return new WarpedPlatterTile(blockPos, blockState);
+        } else if (toCheck.contains("Mangrove")) {
+            return new MangrovePlatterTile(blockPos, blockState);
         } else {
             return new PlatterTile(blockPos, blockState);
         }

@@ -7,7 +7,8 @@ wood_variants = {'oak':'oak_planks',
             'acacia':'acacia_planks',
             'dark_oak':'dark_oak_planks',
             'crimson':'crimson_planks',
-            'warped':'warped_planks'}
+            'warped':'warped_planks',
+                 'mangrove':'mangrove_planks'}
 metal_variants = {'iron':'iron_block',
             'gold':'gold_block'}
 other_variants = {'stone':'stone'}
