@@ -2,14 +2,14 @@ package com.abneyonline.platter.client;
 
 import com.abneyonline.platter.tile.PlatterTile;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import org.joml.Quaternionf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 import java.util.ArrayDeque;
 
@@ -23,13 +23,17 @@ public class PlatterRenderer implements BlockEntityRenderer<PlatterTile> {
     public void render(PlatterTile tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         matrixStackIn.pushPose();
 
-        matrixStackIn.mulPose(new Vector3f(1f, 0f, 0f).rotationDegrees(90f));
+
+        Quaternionf pose = new Quaternionf();
+        pose.rotateX((float) Math.toRadians(90f));
+
+        matrixStackIn.mulPose(pose);
         matrixStackIn.translate(0.5f, 0.5f, -0.063f);
         Minecraft mc = Minecraft.getInstance();
 
         ArrayDeque<ItemStack> items = new ArrayDeque<ItemStack>();
 
-        tileEntityIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+        tileEntityIn.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
             for (int a = 0; a < h.getSlots(); a++) {
                 if (!h.getStackInSlot(a).isEmpty()) {
                     items.add(h.getStackInSlot(a));
@@ -39,6 +43,8 @@ public class PlatterRenderer implements BlockEntityRenderer<PlatterTile> {
 
         while (items.size() > 0) {
             ItemStack itemIn = items.pop();
+
+
 
             matrixStackIn.translate(0f, 0.0f, -0.063f);
             if (!itemIn.isEmpty()) {

@@ -4,9 +4,12 @@ import com.abneyonline.platter.tile.*;
 import joptsimple.internal.AbbreviationMap;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -28,51 +31,51 @@ public class Registration {
 //    private static final DeferredRegister<ModDimension> DIMENSIONS = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, MODID);
 
     public static final RegistryObject<PlatterBlock> oak_platter_block = BLOCKS.register("oak_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> oak_platter_block_item = ITEMS.register("oak_platter_block", () -> new BlockItem(oak_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> oak_platter_block_item = ITEMS.register("oak_platter_block", () -> new BlockItem(oak_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<OakPlatterTile>> oak_platter_tile = TILES.register("oak_platter_block", () -> BlockEntityType.Builder.of(OakPlatterTile::new, oak_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> spruce_platter_block = BLOCKS.register("spruce_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> spruce_platter_block_item = ITEMS.register("spruce_platter_block", () -> new BlockItem(spruce_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> spruce_platter_block_item = ITEMS.register("spruce_platter_block", () -> new BlockItem(spruce_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<SprucePlatterTile>> spruce_platter_tile = TILES.register("spruce_platter_block", () -> BlockEntityType.Builder.of(SprucePlatterTile::new, spruce_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> birch_platter_block = BLOCKS.register("birch_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> birch_platter_block_item = ITEMS.register("birch_platter_block", () -> new BlockItem(birch_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> birch_platter_block_item = ITEMS.register("birch_platter_block", () -> new BlockItem(birch_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<BirchPlatterTile>> birch_platter_tile = TILES.register("birch_platter_block", () -> BlockEntityType.Builder.of(BirchPlatterTile::new, birch_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> jungle_platter_block = BLOCKS.register("jungle_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> jungle_platter_block_item = ITEMS.register("jungle_platter_block", () -> new BlockItem(jungle_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> jungle_platter_block_item = ITEMS.register("jungle_platter_block", () -> new BlockItem(jungle_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<JunglePlatterTile>> jungle_platter_tile = TILES.register("jungle_platter_block", () -> BlockEntityType.Builder.of(JunglePlatterTile::new, jungle_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> acacia_platter_block = BLOCKS.register("acacia_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> acacia_platter_block_item = ITEMS.register("acacia_platter_block", () -> new BlockItem(acacia_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> acacia_platter_block_item = ITEMS.register("acacia_platter_block", () -> new BlockItem(acacia_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<AcaciaPlatterTile>> acacia_platter_tile = TILES.register("acacia_platter_block", () -> BlockEntityType.Builder.of(AcaciaPlatterTile::new, acacia_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> dark_oak_platter_block = BLOCKS.register("dark_oak_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> dark_oak_platter_block_item = ITEMS.register("dark_oak_platter_block", () -> new BlockItem(dark_oak_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> dark_oak_platter_block_item = ITEMS.register("dark_oak_platter_block", () -> new BlockItem(dark_oak_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<DarkOakPlatterTile>> dark_oak_platter_tile = TILES.register("dark_oak_platter_block", () -> BlockEntityType.Builder.of(DarkOakPlatterTile::new, dark_oak_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> stone_platter_block = BLOCKS.register("stone_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> stone_platter_block_item = ITEMS.register("stone_platter_block", () -> new BlockItem(stone_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> stone_platter_block_item = ITEMS.register("stone_platter_block", () -> new BlockItem(stone_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<StonePlatterTile>> stone_platter_tile = TILES.register("stone_platter_block", () -> BlockEntityType.Builder.of(StonePlatterTile::new, stone_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> iron_platter_block = BLOCKS.register("iron_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> iron_platter_block_item = ITEMS.register("iron_platter_block", () -> new BlockItem(iron_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> iron_platter_block_item = ITEMS.register("iron_platter_block", () -> new BlockItem(iron_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<IronPlatterTile>> iron_platter_tile = TILES.register("iron_platter_block", () -> BlockEntityType.Builder.of(IronPlatterTile::new, iron_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> gold_platter_block = BLOCKS.register("gold_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> gold_platter_block_item = ITEMS.register("gold_platter_block", () -> new BlockItem(gold_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> gold_platter_block_item = ITEMS.register("gold_platter_block", () -> new BlockItem(gold_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<GoldPlatterTile>> gold_platter_tile = TILES.register("gold_platter_block", () -> BlockEntityType.Builder.of(GoldPlatterTile::new, gold_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> crimson_platter_block = BLOCKS.register("crimson_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> crimson_platter_block_item = ITEMS.register("crimson_platter_block", () -> new BlockItem(crimson_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> crimson_platter_block_item = ITEMS.register("crimson_platter_block", () -> new BlockItem(crimson_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<CrimsonPlatterTile>> crimson_platter_tile = TILES.register("crimson_platter_block", () -> BlockEntityType.Builder.of(CrimsonPlatterTile::new, crimson_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> warped_platter_block = BLOCKS.register("warped_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> warped_platter_block_item = ITEMS.register("warped_platter_block", () -> new BlockItem(warped_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> warped_platter_block_item = ITEMS.register("warped_platter_block", () -> new BlockItem(warped_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<WarpedPlatterTile>> warped_platter_tile = TILES.register("warped_platter_block", () -> BlockEntityType.Builder.of(WarpedPlatterTile::new, warped_platter_block.get()).build(null));
 
     public static final RegistryObject<PlatterBlock> mangrove_platter_block = BLOCKS.register("mangrove_platter_block", PlatterBlock::new);
-    public static final RegistryObject<Item> mangrove_platter_block_item = ITEMS.register("mangrove_platter_block", () -> new BlockItem(mangrove_platter_block.get(), new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> mangrove_platter_block_item = ITEMS.register("mangrove_platter_block", () -> new BlockItem(mangrove_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<MangrovePlatterTile>> mangrove_platter_tile = TILES.register("mangrove_platter_block", () -> BlockEntityType.Builder.of(MangrovePlatterTile::new, mangrove_platter_block.get()).build(null));
 
     public static void init() {
@@ -82,6 +85,17 @@ public class Registration {
 //        CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
 //        ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 //        DIMENSIONS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+
+    @SubscribeEvent
+    public static void buildContents(CreativeModeTabEvent.BuildContents event) {
+        // Add to ingredients tab
+        if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            for (RegistryObject i : ITEMS.getEntries()) {
+                event.accept(i);
+            }
+
+        }
     }
 
 }
