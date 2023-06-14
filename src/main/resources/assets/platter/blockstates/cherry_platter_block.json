@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "":  { "model": "platter:block/cherry_platter_block" }
+  }
+}

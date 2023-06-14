@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/cherry_platter_block",
+  "textures": {
+    "particle": "platter:block/cherry_platter_block",
+    "down": "platter:block/cherry_platter_block",
+    "up": "platter:block/cherry_platter_block",
+    "east": "platter:block/cherry_platter_block",
+    "west": "platter:block/cherry_platter_block",
+    "north": "platter:block/cherry_platter_block",
+    "south": "platter:block/cherry_platter_block"
+  }
+}

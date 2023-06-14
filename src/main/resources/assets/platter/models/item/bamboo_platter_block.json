@@ -1,0 +1,12 @@
+{
+  "parent": "platter:block/bamboo_platter_block",
+  "textures": {
+    "particle": "platter:block/bamboo_platter_block",
+    "down": "platter:block/bamboo_platter_block",
+    "up": "platter:block/bamboo_platter_block",
+    "east": "platter:block/bamboo_platter_block",
+    "west": "platter:block/bamboo_platter_block",
+    "north": "platter:block/bamboo_platter_block",
+    "south": "platter:block/bamboo_platter_block"
+  }
+}
