@@ -1,6 +1,8 @@
 package com.abneyonline.platter;
 
 import com.abneyonline.platter.tile.*;
+import net.minecraft.client.model.geom.builders.MaterialDefinition;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -10,18 +12,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 
 public class PlatterBlock extends Block implements EntityBlock {
     public PlatterBlock() {
-        super(Properties.of(Material.WOOD).strength(1.0f));
+        super(Properties.of().strength(1.0f));
     }
 
     @Override
@@ -40,7 +43,7 @@ public class PlatterBlock extends Block implements EntityBlock {
             ItemStack playerHand = player.getMainHandItem();
 
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
 
                 if (player.isCrouching()) {
                     for (int a = h.getSlots() - 1; a >= 0; a--) {
@@ -73,7 +76,7 @@ public class PlatterBlock extends Block implements EntityBlock {
         if (!worldIn.isClientSide()) {
             ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 for (int a = 0; a < h.getSlots(); a++) {
                     if (!h.getStackInSlot(a).isEmpty()) {
                         toDrop.add(h.getStackInSlot(a).copy());
@@ -135,6 +138,10 @@ public class PlatterBlock extends Block implements EntityBlock {
             return new WarpedPlatterTile(blockPos, blockState);
         } else if (toCheck.contains("Mangrove")) {
             return new MangrovePlatterTile(blockPos, blockState);
+        } else if (toCheck.contains("Cherry")) {
+            return new CherryPlatterTile(blockPos, blockState);
+        } else if (toCheck.contains("Bamboo")) {
+            return new BambooPlatterTile(blockPos, blockState);
         } else {
             return new PlatterTile(blockPos, blockState);
         }
@@ -150,7 +157,7 @@ public class PlatterBlock extends Block implements EntityBlock {
 
         BlockEntity tileEntity = worldIn.getBlockEntity(pos);
         int toReturn = 0;
-        LazyOptional<IItemHandler> handler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+        LazyOptional<IItemHandler> handler = tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER);
         if(handler.isPresent())
         {
             return ItemHandlerHelper.calcRedstoneFromInventory(handler.orElse(null));

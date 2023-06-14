@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "###"
+  ],
+  "key": {
+    "x": {
+      "item": "minecraft:iron_bars"
+    },
+    "#": {
+      "item": "minecraft:cherry_planks"
+    }
+  },
+  "result": {
+    "item": "platter:cherry_platter_block"
+  }
+}

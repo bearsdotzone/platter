@@ -74,6 +74,8 @@ public class PlatterMod
         BlockEntityRenderers.register(Registration.crimson_platter_tile.get(), PlatterRenderer::new);
         BlockEntityRenderers.register(Registration.warped_platter_tile.get(), PlatterRenderer::new);
         BlockEntityRenderers.register(Registration.mangrove_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.bamboo_platter_tile.get(), PlatterRenderer::new);
+        BlockEntityRenderers.register(Registration.cherry_platter_tile.get(), PlatterRenderer::new);
 
     }
 

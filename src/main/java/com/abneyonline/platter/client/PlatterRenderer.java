@@ -3,6 +3,7 @@ package com.abneyonline.platter.client;
 import com.abneyonline.platter.Config;
 import com.abneyonline.platter.tile.PlatterTile;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.joml.Quaternionf;
 import net.minecraft.client.Minecraft;
@@ -62,7 +63,8 @@ public class PlatterRenderer implements BlockEntityRenderer<PlatterTile> {
 
             matrixStackIn.translate(0f, 0.0f, -0.063f);
             if (!itemIn.isEmpty()) {
-                mc.getItemRenderer().renderStatic(itemIn, ItemTransforms.TransformType.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn, 0);
+
+                mc.getItemRenderer().renderStatic(itemIn, ItemDisplayContext.FIXED, combinedLightIn, combinedOverlayIn, matrixStackIn, bufferIn, null, 0);
             }
         }
         matrixStackIn.popPose();

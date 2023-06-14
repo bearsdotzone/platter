@@ -8,7 +8,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -78,6 +78,16 @@ public class Registration {
     public static final RegistryObject<Item> mangrove_platter_block_item = ITEMS.register("mangrove_platter_block", () -> new BlockItem(mangrove_platter_block.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<MangrovePlatterTile>> mangrove_platter_tile = TILES.register("mangrove_platter_block", () -> BlockEntityType.Builder.of(MangrovePlatterTile::new, mangrove_platter_block.get()).build(null));
 
+    public static final RegistryObject<PlatterBlock> bamboo_platter_block = BLOCKS.register("bamboo_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> bamboo_platter_block_item = ITEMS.register("bamboo_platter_block", () -> new BlockItem(bamboo_platter_block.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<BambooPlatterTile>> bamboo_platter_tile = TILES.register("bamboo_platter_block", () -> BlockEntityType.Builder.of(BambooPlatterTile::new, bamboo_platter_block.get()).build(null));
+
+    public static final RegistryObject<PlatterBlock> cherry_platter_block = BLOCKS.register("cherry_platter_block", PlatterBlock::new);
+    public static final RegistryObject<Item> cherry_platter_block_item = ITEMS.register("cherry_platter_block", () -> new BlockItem(cherry_platter_block.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<CherryPlatterTile>> cherry_platter_tile = TILES.register("cherry_platter_block", () -> BlockEntityType.Builder.of(CherryPlatterTile::new, cherry_platter_block.get()).build(null));
+
+
+
     public static void init() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -88,9 +98,9 @@ public class Registration {
     }
 
     @SubscribeEvent
-    public static void buildContents(CreativeModeTabEvent.BuildContents event) {
+    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         // Add to ingredients tab
-        if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
             for (RegistryObject i : ITEMS.getEntries()) {
                 event.accept(i);
             }
