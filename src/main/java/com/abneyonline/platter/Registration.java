@@ -101,8 +101,10 @@ public class Registration {
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         // Add to ingredients tab
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            for (RegistryObject i : ITEMS.getEntries()) {
-                event.accept(i);
+            for (RegistryObject<Item> i : ITEMS.getEntries()) {
+                if(i.isPresent()) {
+                    event.accept(i);
+                }
             }
 
         }
