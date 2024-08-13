@@ -1,16 +1,13 @@
 # Platter
+Platter adds a variety of platter blocks that automatically feed nearby creatures and players.
 
-A forge mod for Minecraft that adds platters from which nearby creatures and players will be fed autonomously.
+Right-clicking puts items onto the platter. Sneak right-clicking the platter
+removes the item on top of the platter. Platters will stop dispensing food when a redstone signal is applied. Platters support comparator output. Wooden platters will feed animals *and* players, metal and stone platters will only feed players.
 
-In practicality, a platter, when supplied with appropriate foodstuffs, will feed a player when they are nearby and
-hungry. Wooden platters will also feed and breed any animals that are nearby.
+I have tried to give Platter sensible, configurable defaults. By default, a platter will store 9 stacks and search in a 5 block cubic "radius" for creatures to feed every 60 seconds.
 
-Right clicking will take the item from a player's hand and stack it on the platter. Shift right clicking the platter
-will remove the most recently added item. Platters will disable when applied a redstone signal and output a comparator
-signal as appropriate. Platters created without wood will only feed players.
-
-I have attempted to make the mod configurable to the extent that it can be made more or less server friendly. By
-default, a platter will store 9 stacks and search in a 5 block "radius" for creatures to feed every 60 seconds.
+### Compatibility
+From 1.15 to 1.20.1 Platter was developed for the Forge mod loader. As of 1.20.6 Platter will be developed exclusively for the NeoForge mod loader.
 
 ## Recipe
 
