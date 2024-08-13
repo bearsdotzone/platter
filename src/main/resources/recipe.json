@@ -13,6 +13,6 @@
     }
   },
   "result": {
-    "item": "platter:{name}_platter_block"
+    "id": "platter:{name}_platter_block"
   }
 }
