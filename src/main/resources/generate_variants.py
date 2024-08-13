@@ -16,8 +16,8 @@ files = {'blockstates.json':'assets\\platter\\blockstates\\',
             'item.json':'assets\\platter\\item\\',
             'models_block.json':'assets\\platter\\models\\block\\',
             'models_item.json':'assets\\platter\\models\\item\\',
-            'recipe.json':'data\\platter\\recipes\\',
-            'loot_tables_block.json':'data\\platter\\loot_tables\\blocks\\'}
+            'recipe.json':'data\\platter\\recipe\\',
+            'loot_tables_block.json':'data\\platter\\loot_table\\blocks\\'}
 
 for x,y in files.items():
     for i, j in wood_variants.items():

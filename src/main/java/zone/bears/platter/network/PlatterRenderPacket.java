@@ -11,7 +11,8 @@ import zone.bears.platter.PlatterMod;
 import java.util.List;
 
 public record PlatterRenderPacket(List<ItemStack> itemStacks, BlockPos renderedPlatter) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PlatterRenderPacket> TYPE = new CustomPacketPayload.Type<>(new ResourceLocation(PlatterMod.MODID, "render_packet"));
+    public static final CustomPacketPayload.Type<PlatterRenderPacket> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(PlatterMod.MODID, "render_packet"));
+
 
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlatterRenderPacket> STREAM_CODEC = StreamCodec.composite(ItemStack.OPTIONAL_LIST_STREAM_CODEC, PlatterRenderPacket::itemStacks, BlockPos.STREAM_CODEC, PlatterRenderPacket::renderedPlatter, PlatterRenderPacket::new);
