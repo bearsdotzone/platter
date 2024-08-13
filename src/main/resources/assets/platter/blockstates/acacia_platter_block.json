@@ -1,5 +1,7 @@
 {
   "variants": {
-    "":  { "model": "platter:block/acacia_platter_block" }
+    "": {
+      "model": "platter:block/acacia_platter_block"
+    }
   }
 }

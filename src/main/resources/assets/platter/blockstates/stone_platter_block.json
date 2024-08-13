@@ -1,5 +1,7 @@
 {
   "variants": {
-    "":  { "model": "platter:block/stone_platter_block" }
+    "": {
+      "model": "platter:block/stone_platter_block"
+    }
   }
 }
