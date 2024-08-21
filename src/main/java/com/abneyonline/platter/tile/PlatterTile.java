@@ -2,6 +2,8 @@ package com.abneyonline.platter.tile;
 
 import com.abneyonline.platter.Config;
 import com.abneyonline.platter.Registration;
+import com.abneyonline.platter.network.MessagePlatterRender;
+import com.abneyonline.platter.network.PlatterClientHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -16,10 +18,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +32,7 @@ import java.util.List;
 
 public class PlatterTile extends BlockEntity {
 
-    private final ItemStackHandler inputItems = createHandler();
+    public final ItemStackHandler inputItems = createHandler();
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> inputItems);
     private long tickCount = 0;
     protected boolean tickForAnimals = true;
@@ -133,13 +136,18 @@ public class PlatterTile extends BlockEntity {
                 return super.insertItem(slot, stack, simulate);
             }
 
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                setChanged();
+            }
+
             @Nonnull
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack toReturn = super.extractItem(slot, amount, simulate);
 
-                if(toReturn.isEmpty())
-                {
+                if (toReturn.isEmpty()) {
                     return toReturn;
                 }
 
@@ -150,8 +158,6 @@ public class PlatterTile extends BlockEntity {
                             setStackInSlot(i, getStackInSlot(i + 1));
                         }
                     }
-                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
-                    setChanged();
                 }
 
                 return toReturn;
@@ -188,6 +194,20 @@ public class PlatterTile extends BlockEntity {
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
-        if (tag != null) { load(tag); }
+        if (tag != null) {
+            load(tag);
+        }
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (!level.isClientSide()) {
+            ArrayList<ItemStack> items = new ArrayList<>(inputItems.getSlots());
+            for (int i = 0; i < inputItems.getSlots(); i++) {
+                items.add(inputItems.getStackInSlot(i));
+            }
+            PlatterClientHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> getLevel().getChunkAt(getBlockPos())), new MessagePlatterRender(items, getBlockPos()));
+        }
     }
 }

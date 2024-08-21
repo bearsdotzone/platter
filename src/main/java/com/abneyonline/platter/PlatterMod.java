@@ -1,6 +1,7 @@
 package com.abneyonline.platter;
 
 import com.abneyonline.platter.client.PlatterRenderer;
+import com.abneyonline.platter.network.PlatterClientHandler;
 import com.abneyonline.platter.network.SyncHandler;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.level.block.Block;
@@ -56,6 +57,7 @@ public class PlatterMod
 //        LOGGER.info("HELLO FROM PREINIT");
 //        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
         SyncHandler.init();
+        PlatterClientHandler.init();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
