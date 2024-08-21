@@ -1,5 +1,7 @@
 {
   "variants": {
-    "":  { "model": "platter:block/spruce_platter_block" }
+    "": {
+      "model": "platter:block/spruce_platter_block"
+    }
   }
 }

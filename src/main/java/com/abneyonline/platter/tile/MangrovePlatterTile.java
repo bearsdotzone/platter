@@ -6,8 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MangrovePlatterTile extends PlatterTile {
 
-    public MangrovePlatterTile(BlockPos blockPos, BlockState blockState)
-    {
+    public MangrovePlatterTile(BlockPos blockPos, BlockState blockState) {
         super(Registration.mangrove_platter_tile.get(), blockPos, blockState);
     }
 }

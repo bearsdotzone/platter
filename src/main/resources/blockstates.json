@@ -1,5 +1,7 @@
 {
   "variants": {
-    "":  { "model": "platter:block/{name}_platter_block" }
+    "": {
+      "model": "platter:block/{name}_platter_block"
+    }
   }
 }

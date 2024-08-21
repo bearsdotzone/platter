@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PlatterTile extends BlockEntity {
-
     public final ItemStackHandler inputItems = createHandler();
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> inputItems);
     private long tickCount = 0;
@@ -46,7 +45,7 @@ public class PlatterTile extends BlockEntity {
     }
 
     public void tickServer() {
-        if (!level.isClientSide() && !level.hasNeighborSignal(getBlockPos())) {
+        if (level != null && !level.isClientSide() && !level.hasNeighborSignal(getBlockPos())) {
             tickCount += 1;
             if (tickCount >= Config.PLATTER_PERIOD.get() * 20) {
                 tickCount = 0;
@@ -129,7 +128,7 @@ public class PlatterTile extends BlockEntity {
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (simulate == false) {
+                if (!simulate) {
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
                     setChanged();
                 }
@@ -202,7 +201,7 @@ public class PlatterTile extends BlockEntity {
     @Override
     public void setChanged() {
         super.setChanged();
-        if (!level.isClientSide()) {
+        if (level != null && !level.isClientSide()) {
             ArrayList<ItemStack> items = new ArrayList<>(inputItems.getSlots());
             for (int i = 0; i < inputItems.getSlots(); i++) {
                 items.add(inputItems.getStackInSlot(i));
@@ -210,4 +209,6 @@ public class PlatterTile extends BlockEntity {
             PlatterClientHandler.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> getLevel().getChunkAt(getBlockPos())), new MessagePlatterRender(items, getBlockPos()));
         }
     }
+
+
 }
