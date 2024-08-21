@@ -50,26 +50,24 @@ public class PlatterTile extends BlockEntity {
 
                 int radii = Config.PLATTER_RADIUS.get();
 
-                List<LivingEntity> pl = level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().offset(-radii, -radii, -radii), getBlockPos().offset(radii, radii, radii)));
-                ArrayList<Player> lpe = new ArrayList<Player>();
-                ArrayList<Animal> lae = new ArrayList<Animal>();
-                for (LivingEntity p : pl) {
-                    if (p instanceof Player) {
-                        Player pe = (Player) p;
+                List<LivingEntity> livingEntities = level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().offset(-radii, -radii, -radii), getBlockPos().offset(radii, radii, radii)));
+                ArrayList<Player> players = new ArrayList<Player>();
+                ArrayList<Animal> animals = new ArrayList<Animal>();
+                for (LivingEntity livingEntity : livingEntities) {
+                    if (livingEntity instanceof Player playerEntity) {
 
-                        if (pe.canEat(false) && !pe.isCreative()) {
-                            lpe.add(pe);
+                        if (playerEntity.canEat(false) && !playerEntity.isCreative()) {
+                            players.add(playerEntity);
                         }
-                    } else if (p instanceof Animal && tickForAnimals) {
-                        Animal ae = (Animal) p;
-                        if (ae.canFallInLove() && !ae.isBaby()) {
-                            lae.add(ae);
+                    } else if (livingEntity instanceof Animal animalEntity && tickForAnimals) {
+                        if (animalEntity.canFallInLove() && !animalEntity.isBaby()) {
+                            animals.add(animalEntity);
                         }
                     }
                 }
-                getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-                    for (int a = h.getSlots() - 1; a >= 0; a--) {
-                        ItemStack retrievedItem = h.getStackInSlot(a);
+                getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(itemHandler -> {
+                    for (int i = itemHandler.getSlots() - 1; i >= 0; i--) {
+                        ItemStack itemToEat = itemHandler.getStackInSlot(i);
 
                         if (retrievedItem.isEdible() && !lpe.isEmpty()) {
                             Iterator<Player> ipe = lpe.iterator();
@@ -78,11 +76,18 @@ public class PlatterTile extends BlockEntity {
                                 ItemStack toEat = h.extractItem(a, 1, false);
                                 toFeed.eat(level, toEat);
                                 ipe.remove();
+                        if (itemToEat.isEdible() && !players.isEmpty()) {
+                            Iterator<Player> playerIterator = players.iterator();
+                            while (playerIterator.hasNext() && (itemToEat != ItemStack.EMPTY)) {
+                                Player player = playerIterator.next();
+                                ItemStack toEat = itemHandler.extractItem(i, 1, false);
+                                player.eat(level, toEat);
+                                playerIterator.remove();
                             }
                         }
-                        if (!lae.isEmpty()) {
+                        if (!animals.isEmpty()) {
 
-                            Iterator<Animal> iae = lae.iterator();
+                            Iterator<Animal> animalIterator = animals.iterator();
 
                             while (iae.hasNext() && (retrievedItem != ItemStack.EMPTY)) {
                                 Animal ae = iae.next();
@@ -91,11 +96,18 @@ public class PlatterTile extends BlockEntity {
                                     ae.eat(level, toEat);
                                     ae.setInLove(null);
                                     iae.remove();
+                            while (animalIterator.hasNext() && (itemToEat != ItemStack.EMPTY)) {
+                                Animal animal = animalIterator.next();
+                                if (animal.isFood(itemToEat) && animal.canFallInLove() && animal.getAge() == 0) {
+                                    ItemStack toEat = itemHandler.extractItem(i, 1, false);
+                                    animal.eat(level, toEat);
+                                    animal.setInLove(null);
+                                    animalIterator.remove();
                                 }
                             }
                         }
 
-                        if (lae.isEmpty() && lpe.isEmpty()) {
+                        if (animals.isEmpty() && players.isEmpty()) {
                             break;
                         }
                     }
