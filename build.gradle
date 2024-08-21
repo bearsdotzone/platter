@@ -4,6 +4,8 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.145'
+    id("io.github.themrmilchmann.curseforge-publish") version "0.6.1"
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -20,6 +22,12 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 base {
@@ -106,6 +114,8 @@ dependencies {
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
     // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
 
+    runtimeOnly "curse.maven:the-one-probe-245211:5502323"
+
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
@@ -159,6 +169,29 @@ publishing {
             url "file://${project.projectDir}/repo"
         }
     }
+}
+
+curseforge {
+    apiToken.set(providers.gradleProperty("curseforgeAPIToken"))
+    publications {
+        named("neoForge") {
+            projectId.set("381581")
+
+            artifacts.named("main") {
+                from(tasks.named("jar"))
+//                displayName = mod_name + "-" + minecraft_version + "-" + mod_version
+//                releaseType = ReleaseType.BETA
+            }
+        }
+    }
+}
+
+modrinth {
+    token = providers.gradleProperty("MODRINTH_TOKEN")
+    projectId = "BFWLOSg1" // This can be the project ID or the slug. Either will work!
+    versionType = "release" // This is the default -- can also be `beta` or `alpha`
+    uploadFile = jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+    gameVersions = [minecraft_version] // Must be an array, even with only one version
 }
 
 tasks.withType(JavaCompile).configureEach {
