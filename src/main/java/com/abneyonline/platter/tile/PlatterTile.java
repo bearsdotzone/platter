@@ -69,13 +69,6 @@ public class PlatterTile extends BlockEntity {
                     for (int i = itemHandler.getSlots() - 1; i >= 0; i--) {
                         ItemStack itemToEat = itemHandler.getStackInSlot(i);
 
-                        if (retrievedItem.isEdible() && !lpe.isEmpty()) {
-                            Iterator<Player> ipe = lpe.iterator();
-                            while (ipe.hasNext() && (retrievedItem != ItemStack.EMPTY)) {
-                                Player toFeed = ipe.next();
-                                ItemStack toEat = h.extractItem(a, 1, false);
-                                toFeed.eat(level, toEat);
-                                ipe.remove();
                         if (itemToEat.isEdible() && !players.isEmpty()) {
                             Iterator<Player> playerIterator = players.iterator();
                             while (playerIterator.hasNext() && (itemToEat != ItemStack.EMPTY)) {
@@ -83,19 +76,13 @@ public class PlatterTile extends BlockEntity {
                                 ItemStack toEat = itemHandler.extractItem(i, 1, false);
                                 player.eat(level, toEat);
                                 playerIterator.remove();
+                                itemToEat = itemHandler.getStackInSlot(i);
                             }
                         }
                         if (!animals.isEmpty()) {
 
                             Iterator<Animal> animalIterator = animals.iterator();
 
-                            while (iae.hasNext() && (retrievedItem != ItemStack.EMPTY)) {
-                                Animal ae = iae.next();
-                                if (ae.isFood(retrievedItem) && ae.canFallInLove() && ae.getAge() == 0) {
-                                    ItemStack toEat = h.extractItem(a, 1, false);
-                                    ae.eat(level, toEat);
-                                    ae.setInLove(null);
-                                    iae.remove();
                             while (animalIterator.hasNext() && (itemToEat != ItemStack.EMPTY)) {
                                 Animal animal = animalIterator.next();
                                 if (animal.isFood(itemToEat) && animal.canFallInLove() && animal.getAge() == 0) {
@@ -103,6 +90,7 @@ public class PlatterTile extends BlockEntity {
                                     animal.eat(level, toEat);
                                     animal.setInLove(null);
                                     animalIterator.remove();
+                                    itemToEat = itemHandler.getStackInSlot(i);
                                 }
                             }
                         }
@@ -150,14 +138,16 @@ public class PlatterTile extends BlockEntity {
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack toReturn = super.extractItem(slot, amount, simulate);
 
-                if (getStackInSlot(slot).isEmpty()) {
+                if(toReturn.isEmpty())
+                {
                     return toReturn;
                 }
 
-                if (simulate == false) {
-                    if (getStackInSlot(slot).getCount() - amount <= 0) {
-                        for (int a = slot; a < stacks.size() - 1; a++) {
-                            setStackInSlot(a, getStackInSlot(a + 1));
+                if (!simulate) {
+                    if (getStackInSlot(slot).getCount() == 0) {
+                        // The slot we are extracting from is now empty, shift item stacks from above this in the stack, downwards
+                        for (int i = slot; i < stacks.size() - 1; i++) {
+                            setStackInSlot(i, getStackInSlot(i + 1));
                         }
                     }
                     level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
