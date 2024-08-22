@@ -96,8 +96,8 @@ public class PlatterTile extends BlockEntity {
                             if (retrievedItem.getFoodProperties(playerToFeed) != null) {
                                 ItemStack toEat = itemStackHandler.extractItem(i, 1, false);
                                 playerToFeed.eat(level, toEat);
+                                playerIterator.remove();
                             }
-                            playerIterator.remove();
                         }
                     }
                     if (!animals.isEmpty()) {
