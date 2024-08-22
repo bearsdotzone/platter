@@ -97,6 +97,7 @@ public class PlatterTile extends BlockEntity {
                                 ItemStack toEat = itemStackHandler.extractItem(i, 1, false);
                                 playerToFeed.eat(level, toEat);
                                 playerIterator.remove();
+                                retrievedItem = itemStackHandler.getStackInSlot(i);
                             }
                         }
                     }
@@ -111,6 +112,7 @@ public class PlatterTile extends BlockEntity {
                                 animalToFeed.eat(level, toEat);
                                 animalToFeed.setInLove(null);
                                 animalIterator.remove();
+                                retrievedItem = itemStackHandler.getStackInSlot(i);
                             }
                         }
                     }
