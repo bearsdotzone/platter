@@ -5,12 +5,8 @@
     "###"
   ],
   "key": {
-    "x": {
-      "item": "minecraft:iron_bars"
-    },
-    "#": {
-      "item": "minecraft:{crafting}"
-    }
+    "x": "minecraft:iron_bars",
+    "#": "minecraft:{crafting}"
   },
   "result": {
     "id": "platter:{name}_platter_block"

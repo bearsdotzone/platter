@@ -12,12 +12,12 @@ wood_variants = {'oak':'oak_planks',
 metal_variants = {'iron':'iron_block',
             'gold':'gold_block'}
 other_variants = {'stone':'stone'}
-files = {'blockstates.json':'assets\\platter\\blockstates\\',
-            'item.json':'assets\\platter\\item\\',
-            'models_block.json':'assets\\platter\\models\\block\\',
-            'models_item.json':'assets\\platter\\models\\item\\',
-            'recipe.json':'data\\platter\\recipe\\',
-            'loot_tables_block.json':'data\\platter\\loot_table\\blocks\\'}
+files = {'blockstates.json':'assets/platter/blockstates/',
+            'item.json':'assets/platter/item/',
+            'models_block.json':'assets/platter/models/block/',
+            'models_item.json':'assets/platter/models/item/',
+            'recipe.json':'data/platter/recipe/',
+            'loot_tables_block.json':'data/platter/loot_table/blocks/'}
 
 for x,y in files.items():
     for i, j in wood_variants.items():
@@ -62,14 +62,14 @@ for x,y in files.items():
             readString = fileIn.readline()
         fileIn.close
         fileOut.close
-y= 'assets\\platter\\lang\\'
+y= 'assets/platter/lang/'
 if not os.path.exists(y):
     os.makedirs(y)
 fileOut = open(y + 'en_us.json', 'w')
 fileOut.write('{\n')
 all_variants = {**wood_variants, **metal_variants, **other_variants}
 for x in all_variants:
-    toWrite = '\t"block.platter.{name}_platter_block": "{name} Platter"'.replace('{name}', x, 1)
+    toWrite = '  "block.platter.{name}_platter_block": "{name} Platter"'.replace('{name}', x, 1)
     toWrite = toWrite.replace('{name}', x.replace('_', ' ').title())
     if x != 'stone':
         toWrite += ','

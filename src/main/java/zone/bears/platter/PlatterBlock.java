@@ -2,6 +2,9 @@ package zone.bears.platter;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,10 +32,10 @@ import javax.annotation.Nullable;
 public class PlatterBlock extends Block implements EntityBlock {
 
     private static final BlockBehaviour.Properties normalProperties = Properties.of()
-                                                                                .strength(1.0f);
+            .strength(1.0f);
 
-    public PlatterBlock(MapColor mapColor) {
-        super(normalProperties.mapColor(mapColor));
+    public PlatterBlock(MapColor mapColor, String blockName) {
+        super(normalProperties.mapColor(mapColor).setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(PlatterMod.MODID, blockName))));
     }
 
 
@@ -74,9 +77,9 @@ public class PlatterBlock extends Block implements EntityBlock {
             if (worldIn.getBlockEntity(pos) instanceof PlatterTile platterTile) {
                 for (int i = 0; i < platterTile.itemStackHandler.getSlots(); i++) {
                     if (!platterTile.itemStackHandler.getStackInSlot(i)
-                                                     .isEmpty()) {
+                            .isEmpty()) {
                         toDrop.add(platterTile.itemStackHandler.getStackInSlot(i)
-                                                               .copy());
+                                .copy());
                     }
                 }
             }
@@ -166,7 +169,7 @@ public class PlatterBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    public VoxelShape getOcclusionShape(BlockState state) {
         return RENDER_SHAPE;
     }
 

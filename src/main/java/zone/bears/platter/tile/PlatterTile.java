@@ -1,9 +1,12 @@
 package zone.bears.platter.tile;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +16,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import zone.bears.platter.Config;
@@ -22,6 +27,7 @@ import zone.bears.platter.network.PlatterRenderPacket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 public class PlatterTile extends BlockEntity {
 
@@ -71,8 +77,8 @@ public class PlatterTile extends BlockEntity {
                 int radii = Config.PLATTER_RADIUS.get();
 
                 List<LivingEntity> livingEntities = level.getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().offset(-radii, -radii, -radii)
-                                                                                                                       .getCenter(), getBlockPos().offset(radii, radii, radii)
-                                                                                                                                                  .getCenter()));
+                        .getCenter(), getBlockPos().offset(radii, radii, radii)
+                        .getCenter()));
                 ArrayList<Player> players = new ArrayList<>();
                 ArrayList<Animal> animals = new ArrayList<>();
                 for (LivingEntity i : livingEntities) {
@@ -93,14 +99,17 @@ public class PlatterTile extends BlockEntity {
                         Iterator<Player> playerIterator = players.iterator();
                         while (playerIterator.hasNext() && (retrievedItem != ItemStack.EMPTY)) {
                             Player playerToFeed = playerIterator.next();
-                            if (retrievedItem.getFoodProperties(playerToFeed) != null) {
+                            if (retrievedItem.getComponents().has(DataComponents.FOOD)) {
                                 ItemStack toEat = itemStackHandler.extractItem(i, 1, false);
-                                playerToFeed.eat(level, toEat);
+                                playerToFeed.getFoodData().eat(retrievedItem.getComponents().get(DataComponents.FOOD));
+//                                playerToFeed.eat(level, toEat);
                                 playerIterator.remove();
                                 retrievedItem = itemStackHandler.getStackInSlot(i);
                             }
                         }
                     }
+
+
                     if (!animals.isEmpty()) {
 
                         Iterator<Animal> animalIterator = animals.iterator();
@@ -109,8 +118,11 @@ public class PlatterTile extends BlockEntity {
                             Animal animalToFeed = animalIterator.next();
                             if (animalToFeed.isFood(retrievedItem) && animalToFeed.canFallInLove() && animalToFeed.getAge() == 0) {
                                 ItemStack toEat = itemStackHandler.extractItem(i, 1, false);
-                                animalToFeed.eat(level, toEat);
-                                animalToFeed.setInLove(null);
+                                FakePlayer fp = FakePlayerFactory.get((ServerLevel) level, new GameProfile(UUID.randomUUID(), "test"));
+                                fp.setItemInHand(InteractionHand.MAIN_HAND, toEat);
+                                animalToFeed.mobInteract(fp, InteractionHand.MAIN_HAND);
+//                                animalToFeed.eat(level, toEat);
+//                                animalToFeed.setInLove(null);
                                 animalIterator.remove();
                                 retrievedItem = itemStackHandler.getStackInSlot(i);
                             }
