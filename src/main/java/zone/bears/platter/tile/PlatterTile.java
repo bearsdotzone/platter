@@ -26,7 +26,7 @@ import java.util.List;
 public class PlatterTile extends BlockEntity {
 
     public final ItemStackHandler itemStackHandler = new PlatterItemStackHandler(Config.PLATTER_SLOTS.getAsInt());
-    private int tickCount = 0;
+    public int tickCount = 0;
     protected boolean tickForAnimals = true;
 
     public PlatterTile(BlockPos blockPos, BlockState blockState) {
