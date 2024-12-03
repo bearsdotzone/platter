@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "platter:block/{name}_platter_block"
+    "model": "platter:block/acacia_platter_block"
   }
 }

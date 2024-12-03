@@ -1,18 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "platter",
   "pattern": [
     "xxx",
     "###"
   ],
   "key": {
-    "x": {
-      "item": "minecraft:iron_bars"
-    },
-    "#": {
-      "item": "minecraft:mangrove_planks"
-    }
+    "x": "minecraft:iron_bars",
+    "#": "minecraft:mangrove_planks"
   },
   "result": {
     "id": "platter:mangrove_platter_block"
-  }
+  },
+  "show_notification": false
 }

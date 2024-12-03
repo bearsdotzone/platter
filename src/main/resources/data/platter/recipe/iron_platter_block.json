@@ -1,18 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "platter",
   "pattern": [
     "xxx",
     "###"
   ],
   "key": {
-    "x": {
-      "item": "minecraft:iron_bars"
-    },
-    "#": {
-      "item": "minecraft:iron_ingot"
-    }
+    "x": "minecraft:iron_bars",
+    "#": "minecraft:iron_ingot"
   },
   "result": {
     "id": "platter:iron_platter_block"
-  }
+  },
+  "show_notification": false
 }
