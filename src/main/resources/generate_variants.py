@@ -75,16 +75,12 @@ fileOut = open(y + "en_us.json", "w")
 fileOut.write("{\n")
 all_variants = {**wood_variants, **metal_variants, **other_variants}
 for x in all_variants:
-    toWrite = '  "block.platter.{name}_platter_block": "{name} Platter"'.replace('{name}', x, 1)
-    toWrite = toWrite.replace('{name}', x.replace('_', ' ').title())
-    if x != 'stone':
-        toWrite += ','
-    fileOut.write(toWrite + '\n')
-fileOut.write('}\n')
     toWrite = '  "block.platter.{name}_platter_block": "{name} Platter"'.replace(
         "{name}", x, 1
     )
     toWrite = toWrite.replace("{name}", x.replace("_", " ").title())
+    toWrite += ","
     fileOut.write(toWrite + "\n")
+fileOut.write('  "platter.non_wood_tooltip": "Only feeds players"\n')
 fileOut.write("}\n")
 fileOut.close()

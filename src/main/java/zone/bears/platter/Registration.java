@@ -1,9 +1,13 @@
 package zone.bears.platter;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.MapColor;
@@ -33,6 +37,8 @@ public class Registration {
     private static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, PlatterMod.MODID);
 //    private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, PlatterMod.MODID);
 
+    private static final Item.Properties nonWoodProperties = new Item.Properties().useBlockDescriptionPrefix().component(DataComponents.LORE, ItemLore.EMPTY.withLineAdded(Component.translatable("platter.non_wood_tooltip").withStyle(ChatFormatting.GRAY)));
+
     public static final DeferredBlock<Block> oak_platter_block = BLOCKS.register("oak_platter_block", () -> new PlatterBlock(MapColor.WOOD, "oak_platter_block"));
     public static final DeferredItem<BlockItem> oak_platter_block_item = ITEMS.registerSimpleBlockItem("oak_platter_block", oak_platter_block);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OakPlatterTile>> oak_platter_tile = TILES.register("oak_platter_block", () -> new BlockEntityType<>(OakPlatterTile::new, oak_platter_block.get()));
@@ -58,15 +64,15 @@ public class Registration {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DarkOakPlatterTile>> dark_oak_platter_tile = TILES.register("dark_oak_platter_block", () -> new BlockEntityType<>(DarkOakPlatterTile::new, dark_oak_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> stone_platter_block = BLOCKS.register("stone_platter_block", () -> new PlatterBlock(MapColor.STONE, "stone_platter_block"));
-    public static final DeferredItem<BlockItem> stone_platter_block_item = ITEMS.registerSimpleBlockItem("stone_platter_block", stone_platter_block);
+    public static final DeferredItem<BlockItem> stone_platter_block_item = ITEMS.registerSimpleBlockItem("stone_platter_block", stone_platter_block, nonWoodProperties);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StonePlatterTile>> stone_platter_tile = TILES.register("stone_platter_block", () -> new BlockEntityType<>(StonePlatterTile::new, stone_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> iron_platter_block = BLOCKS.register("iron_platter_block", () -> new PlatterBlock(MapColor.METAL, "iron_platter_block"));
-    public static final DeferredItem<BlockItem> iron_platter_block_item = ITEMS.registerSimpleBlockItem("iron_platter_block", iron_platter_block);
+    public static final DeferredItem<BlockItem> iron_platter_block_item = ITEMS.registerSimpleBlockItem("iron_platter_block", iron_platter_block, nonWoodProperties);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IronPlatterTile>> iron_platter_tile = TILES.register("iron_platter_block", () -> new BlockEntityType<>(IronPlatterTile::new, iron_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> gold_platter_block = BLOCKS.register("gold_platter_block", () -> new PlatterBlock(MapColor.METAL, "gold_platter_block"));
-    public static final DeferredItem<BlockItem> gold_platter_block_item = ITEMS.registerSimpleBlockItem("gold_platter_block", gold_platter_block);
+    public static final DeferredItem<BlockItem> gold_platter_block_item = ITEMS.registerSimpleBlockItem("gold_platter_block", gold_platter_block, nonWoodProperties);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GoldPlatterTile>> gold_platter_tile = TILES.register("gold_platter_block", () -> new BlockEntityType<>(GoldPlatterTile::new, gold_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> crimson_platter_block = BLOCKS.register("crimson_platter_block", () -> new PlatterBlock(MapColor.WOOD, "crimson_platter_block"));
