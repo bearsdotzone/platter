@@ -115,34 +115,36 @@ public class PlatterBlock extends Block implements EntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         String toCheck = getName().getString();
-        if (toCheck.contains("Oak") && !toCheck.contains("Dark")) {
+        if (toCheck.equalsIgnoreCase("Oak Platter")) {
             return new OakPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Spruce")) {
+        } else if (toCheck.equalsIgnoreCase("Spruce Platter")) {
             return new SprucePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Birch")) {
+        } else if (toCheck.equalsIgnoreCase("Birch Platter")) {
             return new BirchPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Jungle")) {
+        } else if (toCheck.equalsIgnoreCase("Jungle Platter")) {
             return new JunglePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Acacia")) {
+        } else if (toCheck.equalsIgnoreCase("Acacia Platter")) {
             return new AcaciaPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Dark")) {
+        } else if (toCheck.equalsIgnoreCase("Dark Oak Platter")) {
             return new DarkOakPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Stone")) {
+        } else if (toCheck.equalsIgnoreCase("Stone Platter")) {
             return new StonePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Iron")) {
+        } else if (toCheck.equalsIgnoreCase("Iron Platter")) {
             return new IronPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Gold")) {
+        } else if (toCheck.equalsIgnoreCase("Gold Platter")) {
             return new GoldPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Crimson")) {
+        } else if (toCheck.equalsIgnoreCase("Crimson Platter")) {
             return new CrimsonPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Warped")) {
+        } else if (toCheck.equalsIgnoreCase("Warped Platter")) {
             return new WarpedPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Mangrove")) {
+        } else if (toCheck.equalsIgnoreCase("Mangrove Platter")) {
             return new MangrovePlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Cherry")) {
+        } else if (toCheck.equalsIgnoreCase("Cherry Platter")) {
             return new CherryPlatterTile(blockPos, blockState);
-        } else if (toCheck.contains("Bamboo")) {
+        } else if (toCheck.equalsIgnoreCase("Bamboo Platter")) {
             return new BambooPlatterTile(blockPos, blockState);
+        } else if (toCheck.equalsIgnoreCase("Pale Oak Platter")) {
+            return new PaleOakPlatterTile(blockPos, blockState);
         } else {
             return new PlatterTile(blockPos, blockState);
         }

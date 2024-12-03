@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "platter",
+  "pattern": [
+    "xxx",
+    "###"
+  ],
+  "key": {
+    "x": "minecraft:iron_bars",
+    "#": "minecraft:pale_oak_planks"
+  },
+  "result": {
+    "id": "platter:pale_oak_platter_block"
+  },
+  "show_notification": false
+}

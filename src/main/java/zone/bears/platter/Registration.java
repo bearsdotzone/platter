@@ -89,6 +89,10 @@ public class Registration {
     public static final DeferredItem<BlockItem> cherry_platter_block_item = ITEMS.registerSimpleBlockItem("cherry_platter_block", cherry_platter_block);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CherryPlatterTile>> cherry_platter_tile = TILES.register("cherry_platter_block", () -> new BlockEntityType<>(CherryPlatterTile::new, cherry_platter_block.get()));
 
+    public static final DeferredHolder<Block, Block> pale_oak_platter_block = BLOCKS.register("pale_oak_platter_block", () -> new PlatterBlock(MapColor.WOOD, "pale_oak_platter_block"));
+    public static final DeferredItem<BlockItem> pale_oak_platter_block_item = ITEMS.registerSimpleBlockItem("pale_oak_platter_block", pale_oak_platter_block);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PaleOakPlatterTile>> pale_oak_platter_tile = TILES.register("pale_oak_platter_block", () -> new BlockEntityType<>(PaleOakPlatterTile::new, pale_oak_platter_block.get()));
+
 //    public static final Supplier<AttachmentType<PlatterTile.PlatterItemStackHandler>> PLATTER_ITEM_STACK_HANDLER = ATTACHMENT_TYPES.register("platter_item_stack_handler", () -> AttachmentType.serializable((x) -> new PlatterTile.PlatterItemStackHandler(Config.PLATTER_SLOTS.getAsInt())).build());
 
     public static void init(IEventBus modEventBus) {
