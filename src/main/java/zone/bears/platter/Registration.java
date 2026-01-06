@@ -29,7 +29,7 @@ import zone.bears.platter.network.PlatterClientPayloadHandler;
 import zone.bears.platter.network.PlatterRenderPacket;
 import zone.bears.platter.tile.*;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = "platter")
+@EventBusSubscriber(modid = "platter")
 public class Registration {
 
     private static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PlatterMod.MODID);
