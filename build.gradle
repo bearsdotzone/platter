@@ -179,7 +179,7 @@ curseforge {
 
             artifacts.named("main") {
                 from(tasks.named("jar"))
-//                displayName = mod_name + "-" + minecraft_version + "-" + mod_version
+                displayName = mod_name + "-" + minecraft_version + "-" + mod_version
 //                releaseType = ReleaseType.BETA
             }
         }
