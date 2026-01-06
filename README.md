@@ -9,6 +9,9 @@ I have tried to give Platter sensible, configurable defaults. By default, a plat
 ### Compatibility
 From 1.15 to 1.20.1 Platter was developed for the Forge mod loader. As of 1.20.6 Platter will be developed exclusively for the NeoForge mod loader.
 
+## Contributors
+- smoong, Korean translation (thanks again!)
+
 ## Recipe
 
 ![recipe](https://i.imgur.com/NTVeDxD.png "recipe")
@@ -18,14 +21,6 @@ Replace the wood planks with other wood planks, iron or gold ingots, or stone to
 ## Modpack Permission
 
 Yes.
-
-## To-Do
-
-N/A
-
-## Known Bugs
-
-N/A
 
 ## Development
 
