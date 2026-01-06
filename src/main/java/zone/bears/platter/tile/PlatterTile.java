@@ -53,7 +53,7 @@ public class PlatterTile extends BlockEntity {
     @Override
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
-        itemStackHandler.deserializeNBT(pRegistries, pTag.getCompound("inv").get());
+        itemStackHandler.deserializeNBT(pRegistries, pTag.getCompound("inv").orElse(new CompoundTag()));
     }
 
     @Override
@@ -148,7 +148,7 @@ public class PlatterTile extends BlockEntity {
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         super.handleUpdateTag(tag, lookupProvider);
-        itemStackHandler.deserializeNBT(lookupProvider, tag.getCompound("Items").get());
+        itemStackHandler.deserializeNBT(lookupProvider, tag.getCompound("Items").orElse(new CompoundTag()));
     }
 
 
