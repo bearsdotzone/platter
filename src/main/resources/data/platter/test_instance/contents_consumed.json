@@ -1,0 +1,13 @@
+{
+  "environment": "platter:platter_environment",
+  "structure": "platter:contents_consumed",
+  "max_ticks": 1500,
+  "setup_ticks": 0,
+  "required": true,
+  "rotation": "clockwise_90",
+  "manual_only": false,
+  "max_attempts": 3,
+  "required_successes": 1,
+  "sky_access": false,
+  "type": "minecraft:block_based"
+}

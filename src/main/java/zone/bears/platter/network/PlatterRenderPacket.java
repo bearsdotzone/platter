@@ -2,20 +2,21 @@ package zone.bears.platter.network;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import zone.bears.platter.PlatterMod;
+import zone.bears.platter.Platter;
 
 import java.util.List;
+import java.util.Optional;
 
-public record PlatterRenderPacket(List<ItemStack> itemStacks, BlockPos renderedPlatter) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PlatterRenderPacket> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(PlatterMod.MODID, "render_packet"));
+public record PlatterRenderPacket(Optional<List<ItemStack>> itemStacks,
+                                  BlockPos renderedPlatter) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<PlatterRenderPacket> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(Platter.MODID, "render_packet"));
 
-
-
-    public static final StreamCodec<RegistryFriendlyByteBuf, PlatterRenderPacket> STREAM_CODEC = StreamCodec.composite(ItemStack.OPTIONAL_LIST_STREAM_CODEC, PlatterRenderPacket::itemStacks, BlockPos.STREAM_CODEC, PlatterRenderPacket::renderedPlatter, PlatterRenderPacket::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlatterRenderPacket> STREAM_CODEC = StreamCodec.composite(ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()).apply(ByteBufCodecs::optional), PlatterRenderPacket::itemStacks, BlockPos.STREAM_CODEC, PlatterRenderPacket::renderedPlatter, PlatterRenderPacket::new);
 
 
     @Override
