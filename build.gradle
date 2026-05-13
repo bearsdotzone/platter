@@ -3,6 +3,8 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
     id 'idea'
+    id("io.github.themrmilchmann.curseforge-publish") version "0.8.0"
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -32,7 +34,7 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = mod_id + "-" + minecraft_version
 }
 
 // Mojang ships Java 25 to end users in 26.1.2, so mods should target Java 25.
@@ -185,6 +187,30 @@ publishing {
             url "file://${project.projectDir}/repo"
         }
     }
+}
+
+curseforge {
+    apiToken.set(providers.gradleProperty("curseforgeAPIToken"))
+    publications {
+        named("neoForge") {
+            projectId.set("381581")
+
+            artifacts.named("main") {
+                from(tasks.named("jar"))
+                displayName = mod_name + "-" + minecraft_version + "-" + mod_version
+//                releaseType = ReleaseType.BETA
+            }
+        }
+    }
+}
+
+modrinth {
+    token = providers.gradleProperty("MODRINTH_TOKEN")
+    projectId = "BFWLOSg1" // This can be the project ID or the slug. Either will work!
+    versionType = "release" // This is the default -- can also be `beta` or `alpha`
+    uploadFile = jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+    gameVersions = [minecraft_version] // Must be an array, even with only one version
+    versionName = mod_name + "-" + minecraft_version + "-" + mod_version
 }
 
 tasks.withType(JavaCompile).configureEach {
