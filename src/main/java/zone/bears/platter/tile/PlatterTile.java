@@ -31,8 +31,8 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import org.jspecify.annotations.NonNull;
 import zone.bears.platter.Config;
-import zone.bears.platter.Registration;
 import zone.bears.platter.network.PlatterRenderPacket;
 
 import java.util.*;
@@ -52,14 +52,14 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
     }
 
     @Override
-    protected void saveAdditional(ValueOutput valueOutput) {
+    protected void saveAdditional(@NonNull ValueOutput valueOutput) {
         super.saveAdditional(valueOutput);
         itemStackHandler.serialize(valueOutput);
 
     }
 
     @Override
-    protected void loadAdditional(ValueInput valueInput) {
+    protected void loadAdditional(@NonNull ValueInput valueInput) {
         super.loadAdditional(valueInput);
         itemStackHandler.deserialize(valueInput);
     }
@@ -69,20 +69,27 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
         super.setChanged();
         if (level != null && !level.isClientSide()) {
             if (ResourceHandlerUtil.isEmpty(itemStackHandler)) {
-                PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level, ChunkPos.containing(getBlockPos()), new PlatterRenderPacket(Optional.empty(), getBlockPos()));
+                PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level,
+                        ChunkPos.containing(getBlockPos()),
+                        new PlatterRenderPacket(Optional.empty(), getBlockPos()));
             } else {
-                PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level, ChunkPos.containing(getBlockPos()), new PlatterRenderPacket(Optional.of(itemStackHandler.copyToList().stream().filter((i) -> i != ItemStack.EMPTY).toList()), getBlockPos()));
+                PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level,
+                        ChunkPos.containing(getBlockPos()),
+                        new PlatterRenderPacket(Optional.of(itemStackHandler.copyToList()
+                                .stream()
+                                .filter((i) -> i != ItemStack.EMPTY)
+                                .toList()), getBlockPos()));
             }
         }
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    public @NonNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider registries) {
         return this.saveWithoutMetadata(registries);
     }
 
     @Override
-    public void handleUpdateTag(ValueInput input) {
+    public void handleUpdateTag(@NonNull ValueInput input) {
         super.handleUpdateTag(input);
     }
 
@@ -94,7 +101,9 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
 
                 int radius = Config.PLATTER_RADIUS.get();
                 AABB bb = new AABB(getBlockPos()).inflate(radius);
-                List<Entity> entities = level.getEntities((Entity) null, bb, (i) -> i instanceof Animal || i instanceof Player);
+                List<Entity> entities = level.getEntities((Entity) null,
+                        bb,
+                        (i) -> i instanceof Animal || i instanceof Player);
                 ArrayList<Player> players = new ArrayList<>();
                 ArrayList<Animal> animals = new ArrayList<>();
                 for (Entity i : entities) {
@@ -109,22 +118,30 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
                     }
                 }
 
-                Map<Class, List<Animal>> animalGroups = animals.stream().collect(Collectors.groupingBy(Animal::getClass));
+                Map<Class<? extends Animal>, List<Animal>> animalGroups = animals.stream()
+                        .collect(Collectors.groupingBy(Animal::getClass));
 
                 try (Transaction rootTransaction = Transaction.openRoot()) {
                     for (int i = itemStackHandler.size() - 1; i >= 0; i--) {
                         ItemResource retrievedItem;
-                        while (!players.isEmpty() && (retrievedItem = itemStackHandler.getResource(i)).getComponents().has(DataComponents.FOOD)) {
+                        while (!players.isEmpty() && (retrievedItem = itemStackHandler.getResource(i)).getComponents()
+                                .has(DataComponents.FOOD)) {
                             Player playerToFeed = players.removeFirst();
                             itemStackHandler.extract(i, retrievedItem, 1, rootTransaction);
-                            level.playSound(null, playerToFeed.blockPosition(), SoundEvents.GENERIC_EAT.value(), SoundSource.PLAYERS);
-                            playerToFeed.getFoodData().eat(retrievedItem.getComponents().get(DataComponents.FOOD));
+                            level.playSound(null,
+                                    playerToFeed.blockPosition(),
+                                    SoundEvents.GENERIC_EAT.value(),
+                                    SoundSource.PLAYERS);
+                            playerToFeed.getFoodData().eat(Objects.requireNonNull(retrievedItem.getComponents()
+                                    .get(DataComponents.FOOD)));
                         }
 
                         if (!animalGroups.isEmpty()) {
-                            FakePlayer fp = FakePlayerFactory.get((ServerLevel) level, new GameProfile(UUID.randomUUID(), "test"));
+                            FakePlayer fp = FakePlayerFactory.get((ServerLevel) level,
+                                    new GameProfile(UUID.randomUUID(), "test"));
                             for (List<Animal> animalList : animalGroups.values()) {
-                                while (!animalList.isEmpty() && animalList.getFirst().isFood((retrievedItem = itemStackHandler.getResource(i)).toStack())) {
+                                while (!animalList.isEmpty() && animalList.getFirst()
+                                        .isFood((retrievedItem = itemStackHandler.getResource(i)).toStack())) {
                                     Animal animalToFeed = animalList.removeFirst();
                                     if (animalToFeed.canFallInLove() && animalToFeed.getAge() == 0) {
                                         itemStackHandler.extract(i, retrievedItem, 1, rootTransaction);
@@ -152,7 +169,7 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
     }
 
     @Override
-    public Vec3 position() {
+    public @NonNull Vec3 position() {
         return getBlockPos().getCenter();
     }
 
@@ -168,13 +185,16 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
         }
 
         @Override
-        protected void onContentsChanged(int index, ItemStack previousContents) {
+        protected void onContentsChanged(int index, @NonNull ItemStack previousContents) {
             super.onContentsChanged(index, previousContents);
             setChanged();
         }
 
         @Override
-        public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
+        public int extract(int index,
+                           @NonNull ItemResource resource,
+                           int amount,
+                           @NonNull TransactionContext transaction) {
             int extracted = super.extract(index, resource, amount, transaction);
             if (getResource(index) == ItemResource.EMPTY) {
                 for (int i = index; i < size() - 1; i++) {
@@ -194,12 +214,15 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
         }
 
         @Override
-        public int insert(ItemResource resource, int amount, TransactionContext transaction) {
+        public int insert(@NonNull ItemResource resource, int amount, @NonNull TransactionContext transaction) {
             return pushStack(resource, amount);
         }
 
         @Override
-        public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
+        public int insert(int index,
+                          @NonNull ItemResource resource,
+                          int amount,
+                          @NonNull TransactionContext transaction) {
             return pushStack(resource, amount);
         }
 

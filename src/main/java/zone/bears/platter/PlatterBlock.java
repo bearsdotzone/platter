@@ -27,9 +27,12 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-import zone.bears.platter.tile.*;
+import org.jspecify.annotations.NonNull;
+import zone.bears.platter.tile.PersonalPlatterTile;
+import zone.bears.platter.tile.PlatterTile;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 
 public class PlatterBlock extends Block implements EntityBlock {
@@ -38,15 +41,24 @@ public class PlatterBlock extends Block implements EntityBlock {
     private final static VoxelShape RENDER_SHAPE = Shapes.box(0.0, 0.0, 0.0, 1.0, 2.0 / 16.0, 1.0);
 
     public PlatterBlock(MapColor mapColor, String blockName) {
-        super(normalProperties.mapColor(mapColor).setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(Platter.MODID, blockName))));
+        super(normalProperties.mapColor(mapColor)
+                .setId(ResourceKey.create(Registries.BLOCK,
+                        Identifier.fromNamespaceAndPath(Platter.MODID, blockName))));
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected @NonNull InteractionResult useItemOn(@NonNull ItemStack itemStack,
+                                                   @NonNull BlockState state,
+                                                   Level level,
+                                                   @NonNull BlockPos pos,
+                                                   @NonNull Player player,
+                                                   @NonNull InteractionHand hand,
+                                                   @NonNull BlockHitResult hitResult) {
         if (!level.isClientSide() && !player.isCrouching() && level.getBlockEntity(pos) instanceof PlatterTile platterTile) {
             try (Transaction rootTransaction = Transaction.openRoot()) {
                 if (platterTile.itemStackHandler.hasFreeSpace()) {
-                    int inserted = platterTile.itemStackHandler.pushStack(ItemResource.of(itemStack), itemStack.count());
+                    int inserted = platterTile.itemStackHandler.pushStack(ItemResource.of(itemStack),
+                            itemStack.count());
                     if (!player.isCreative()) player.getMainHandItem().shrink(inserted);
                     level.sendBlockUpdated(pos, state, state, 2);
                     rootTransaction.commit();
@@ -58,7 +70,11 @@ public class PlatterBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult blockHitResult) {
+    protected @NonNull InteractionResult useWithoutItem(@NonNull BlockState state,
+                                                        Level level,
+                                                        @NonNull BlockPos pos,
+                                                        @NonNull Player player,
+                                                        @NonNull BlockHitResult blockHitResult) {
         if (!level.isClientSide() && player.isCrouching() && level.getBlockEntity(pos) instanceof PlatterTile platterTile) {
             try (Transaction rootTransaction = Transaction.openRoot()) {
                 if (platterTile.itemStackHandler.topItemResource() != ItemResource.EMPTY) {
@@ -74,7 +90,10 @@ public class PlatterBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public BlockState playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
+    public @NonNull BlockState playerWillDestroy(Level worldIn,
+                                                 @NonNull BlockPos pos,
+                                                 @NonNull BlockState state,
+                                                 @NonNull Player player) {
         if (!worldIn.isClientSide() && worldIn.getBlockEntity(pos) instanceof PlatterTile platterTile) {
             Containers.dropContents(worldIn, pos, platterTile.itemStackHandler.copyToList());
         }
@@ -83,7 +102,9 @@ public class PlatterBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NonNull Level pLevel,
+                                                                  @NonNull BlockState pState,
+                                                                  @NonNull BlockEntityType<T> pBlockEntityType) {
         return (iLevel, iBlockPos, iBlockState, iBlockEntity) -> {
             if (iBlockEntity instanceof PlatterTile tile) tile.tickServer();
         };
@@ -91,20 +112,24 @@ public class PlatterBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        if ((blockState.getBlock().equals(Registration.stone_platter_block.get())) || (blockState.getBlock().equals(Registration.iron_platter_block.get())) || (blockState.getBlock().equals(Registration.gold_platter_block.get()))) {
+    public BlockEntity newBlockEntity(@NonNull BlockPos blockPos, @NonNull BlockState blockState) {
+        if (Arrays.stream(Registration.personal_platter_blocks)
+                .anyMatch((i) -> i.get().equals(blockState.getBlock()))) {
             return new PersonalPlatterTile(blockPos, blockState);
         }
         return new PlatterTile(blockPos, blockState);
     }
 
     @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(@NonNull BlockState state) {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+    public int getAnalogOutputSignal(@NonNull BlockState state,
+                                     Level level,
+                                     @NonNull BlockPos pos,
+                                     @NonNull Direction direction) {
         // The utility class wasn't working.
         if (level.getBlockEntity(pos) instanceof PlatterTile platterTile) {
             float slotsFilled = 0;
@@ -117,17 +142,23 @@ public class PlatterBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    public @NonNull VoxelShape getShape(@NonNull BlockState state,
+                                        @NonNull BlockGetter worldIn,
+                                        @NonNull BlockPos pos,
+                                        @NonNull CollisionContext context) {
         return RENDER_SHAPE;
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState state) {
+    public @NonNull VoxelShape getOcclusionShape(@NonNull BlockState state) {
         return RENDER_SHAPE;
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    public @NonNull VoxelShape getCollisionShape(@NonNull BlockState state,
+                                                 @NonNull BlockGetter worldIn,
+                                                 @NonNull BlockPos pos,
+                                                 @NonNull CollisionContext context) {
         return RENDER_SHAPE;
     }
 }

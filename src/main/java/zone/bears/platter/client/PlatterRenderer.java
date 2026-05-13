@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Random;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import zone.bears.platter.Config;
 import zone.bears.platter.tile.PlatterTile;
@@ -29,12 +30,16 @@ public class PlatterRenderer<T extends PlatterTile> implements BlockEntityRender
     }
 
     @Override
-    public PlatterBlockEntityRenderState createRenderState() {
+    public @NonNull PlatterBlockEntityRenderState createRenderState() {
         return new PlatterBlockEntityRenderState();
     }
 
     @Override
-    public void extractRenderState(T blockEntity, PlatterBlockEntityRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(@NonNull T blockEntity,
+                                   @NonNull PlatterBlockEntityRenderState state,
+                                   float partialTicks,
+                                   @NonNull Vec3 cameraPosition,
+                                   ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         List<ItemStack> items = blockEntity.itemStackHandler.copyToList();
         int seed = HashCommon.long2int(blockEntity.getBlockPos().asLong());
@@ -43,14 +48,22 @@ public class PlatterRenderer<T extends PlatterTile> implements BlockEntityRender
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i) != ItemStack.EMPTY) {
                 ItemStackRenderState itemStackRenderState = new ItemStackRenderState();
-                itemModelResolver.updateForTopItem(itemStackRenderState, items.get(i), ItemDisplayContext.NONE, blockEntity.getLevel(), blockEntity, seed++);
+                itemModelResolver.updateForTopItem(itemStackRenderState,
+                        items.get(i),
+                        ItemDisplayContext.NONE,
+                        blockEntity.getLevel(),
+                        blockEntity,
+                        seed++);
                 state.items[i] = itemStackRenderState;
             }
         }
     }
 
     @Override
-    public void submit(PlatterBlockEntityRenderState platterBlockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(PlatterBlockEntityRenderState platterBlockEntityRenderState,
+                       @NonNull PoseStack poseStack,
+                       @NonNull SubmitNodeCollector submitNodeCollector,
+                       @NonNull CameraRenderState cameraRenderState) {
 
         Random r = new Random(platterBlockEntityRenderState.seed);
 
@@ -69,7 +82,11 @@ public class PlatterRenderer<T extends PlatterTile> implements BlockEntityRender
                     poseStack.mulPose(Axis.ZP.rotationDegrees(rotationDegrees));
                 }
 
-                itemStackRenderState.submit(poseStack, submitNodeCollector, platterBlockEntityRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+                itemStackRenderState.submit(poseStack,
+                        submitNodeCollector,
+                        platterBlockEntityRenderState.lightCoords,
+                        OverlayTexture.NO_OVERLAY,
+                        0);
                 poseStack.popPose();
             }
         }
