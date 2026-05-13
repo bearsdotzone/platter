@@ -12,7 +12,7 @@ public class Platter {
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "platter";
-    public static final String version = "1.0.0";
+    public static final String version = "1.0.1";
 
     public Platter(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);

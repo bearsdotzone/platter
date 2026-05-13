@@ -47,8 +47,7 @@ public class PlatterBlock extends Block implements EntityBlock {
             try (Transaction rootTransaction = Transaction.openRoot()) {
                 if (platterTile.itemStackHandler.hasFreeSpace()) {
                     int inserted = platterTile.itemStackHandler.pushStack(ItemResource.of(itemStack), itemStack.count());
-                    if (!player.isCreative())
-                        player.getMainHandItem().shrink(inserted);
+                    if (!player.isCreative()) player.getMainHandItem().shrink(inserted);
                     level.sendBlockUpdated(pos, state, state, 2);
                     rootTransaction.commit();
                     return InteractionResult.SUCCESS;
@@ -93,40 +92,10 @@ public class PlatterBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        String toCheck = getName().getString();
-        if (toCheck.equalsIgnoreCase("Oak Platter")) {
-            return new OakPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Spruce Platter")) {
-            return new SprucePlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Birch Platter")) {
-            return new BirchPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Jungle Platter")) {
-            return new JunglePlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Acacia Platter")) {
-            return new AcaciaPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Dark Oak Platter")) {
-            return new DarkOakPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Stone Platter")) {
-            return new StonePlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Iron Platter")) {
-            return new IronPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Gold Platter")) {
-            return new GoldPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Crimson Platter")) {
-            return new CrimsonPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Warped Platter")) {
-            return new WarpedPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Mangrove Platter")) {
-            return new MangrovePlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Cherry Platter")) {
-            return new CherryPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Bamboo Platter")) {
-            return new BambooPlatterTile(blockPos, blockState);
-        } else if (toCheck.equalsIgnoreCase("Pale Oak Platter")) {
-            return new PaleOakPlatterTile(blockPos, blockState);
-        } else {
-            return new PlatterTile(blockPos, blockState);
+        if ((blockState.getBlock().equals(Registration.stone_platter_block.get())) || (blockState.getBlock().equals(Registration.iron_platter_block.get())) || (blockState.getBlock().equals(Registration.gold_platter_block.get()))) {
+            return new PersonalPlatterTile(blockPos, blockState);
         }
+        return new PlatterTile(blockPos, blockState);
     }
 
     @Override
@@ -136,6 +105,7 @@ public class PlatterBlock extends Block implements EntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        // The utility class wasn't working.
         if (level.getBlockEntity(pos) instanceof PlatterTile platterTile) {
             float slotsFilled = 0;
             for (ItemStack i : platterTile.itemStackHandler.copyToList()) {

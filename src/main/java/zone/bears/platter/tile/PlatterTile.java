@@ -7,6 +7,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ItemOwner;
@@ -31,6 +32,7 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import zone.bears.platter.Config;
+import zone.bears.platter.Registration;
 import zone.bears.platter.network.PlatterRenderPacket;
 
 import java.util.*;
@@ -42,7 +44,7 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
     protected boolean tickForAnimals = true;
 
     public PlatterTile(BlockPos blockPos, BlockState blockState) {
-        super(zone.bears.platter.Registration.oak_platter_tile.get(), blockPos, blockState);
+        super(zone.bears.platter.Registration.platter_tile.get(), blockPos, blockState);
     }
 
     public PlatterTile(BlockEntityType blockEntityType, BlockPos blockPos, BlockState blockState) {
@@ -115,7 +117,7 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
                         while (!players.isEmpty() && (retrievedItem = itemStackHandler.getResource(i)).getComponents().has(DataComponents.FOOD)) {
                             Player playerToFeed = players.removeFirst();
                             itemStackHandler.extract(i, retrievedItem, 1, rootTransaction);
-                            playerToFeed.playSound(SoundEvents.GENERIC_EAT.value());
+                            level.playSound(null, playerToFeed.blockPosition(), SoundEvents.GENERIC_EAT.value(), SoundSource.PLAYERS);
                             playerToFeed.getFoodData().eat(retrievedItem.getComponents().get(DataComponents.FOOD));
                         }
 
@@ -215,6 +217,7 @@ public class PlatterTile extends BlockEntity implements ItemOwner {
             return -1;
         }
 
+        // Index of the first non-empty slot, or -1 if the container is empty.
         private int topItemIndex() {
             for (int i = size() - 1; i >= 0; i--) {
                 if (getResource(i) != ItemResource.EMPTY) {

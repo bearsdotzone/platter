@@ -41,63 +41,51 @@ public class Registration {
 
     public static final DeferredBlock<Block> oak_platter_block = BLOCKS.register("oak_platter_block", () -> new PlatterBlock(MapColor.WOOD, "oak_platter_block"));
     public static final DeferredItem<BlockItem> oak_platter_block_item = ITEMS.registerSimpleBlockItem("oak_platter_block", oak_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OakPlatterTile>> oak_platter_tile = TILES.register("oak_platter_block", () -> new BlockEntityType<>(OakPlatterTile::new, oak_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> spruce_platter_block = BLOCKS.register("spruce_platter_block", () -> new PlatterBlock(MapColor.WOOD, "spruce_platter_block"));
     public static final DeferredItem<BlockItem> spruce_platter_block_item = ITEMS.registerSimpleBlockItem("spruce_platter_block", spruce_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SprucePlatterTile>> spruce_platter_tile = TILES.register("spruce_platter_block", () -> new BlockEntityType<>(SprucePlatterTile::new, spruce_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> birch_platter_block = BLOCKS.register("birch_platter_block", () -> new PlatterBlock(MapColor.WOOD, "birch_platter_block"));
     public static final DeferredItem<BlockItem> birch_platter_block_item = ITEMS.registerSimpleBlockItem("birch_platter_block", birch_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BirchPlatterTile>> birch_platter_tile = TILES.register("birch_platter_block", () -> new BlockEntityType<>(BirchPlatterTile::new, birch_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> jungle_platter_block = BLOCKS.register("jungle_platter_block", () -> new PlatterBlock(MapColor.WOOD, "jungle_platter_block"));
     public static final DeferredItem<BlockItem> jungle_platter_block_item = ITEMS.registerSimpleBlockItem("jungle_platter_block", jungle_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<JunglePlatterTile>> jungle_platter_tile = TILES.register("jungle_platter_block", () -> new BlockEntityType<>(JunglePlatterTile::new, jungle_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> acacia_platter_block = BLOCKS.register("acacia_platter_block", () -> new PlatterBlock(MapColor.WOOD, "acacia_platter_block"));
     public static final DeferredItem<BlockItem> acacia_platter_block_item = ITEMS.registerSimpleBlockItem("acacia_platter_block", acacia_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AcaciaPlatterTile>> acacia_platter_tile = TILES.register("acacia_platter_block", () -> new BlockEntityType<>(AcaciaPlatterTile::new, acacia_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> dark_oak_platter_block = BLOCKS.register("dark_oak_platter_block", () -> new PlatterBlock(MapColor.WOOD, "dark_oak_platter_block"));
     public static final DeferredItem<BlockItem> dark_oak_platter_block_item = ITEMS.registerSimpleBlockItem("dark_oak_platter_block", dark_oak_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DarkOakPlatterTile>> dark_oak_platter_tile = TILES.register("dark_oak_platter_block", () -> new BlockEntityType<>(DarkOakPlatterTile::new, dark_oak_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> stone_platter_block = BLOCKS.register("stone_platter_block", () -> new PlatterBlock(MapColor.STONE, "stone_platter_block"));
     public static final DeferredItem<BlockItem> stone_platter_block_item = ITEMS.registerSimpleBlockItem("stone_platter_block", stone_platter_block, () -> nonWoodProperties);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StonePlatterTile>> stone_platter_tile = TILES.register("stone_platter_block", () -> new BlockEntityType<>(StonePlatterTile::new, stone_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> iron_platter_block = BLOCKS.register("iron_platter_block", () -> new PlatterBlock(MapColor.METAL, "iron_platter_block"));
     public static final DeferredItem<BlockItem> iron_platter_block_item = ITEMS.registerSimpleBlockItem("iron_platter_block", iron_platter_block, () -> nonWoodProperties);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IronPlatterTile>> iron_platter_tile = TILES.register("iron_platter_block", () -> new BlockEntityType<>(IronPlatterTile::new, iron_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> gold_platter_block = BLOCKS.register("gold_platter_block", () -> new PlatterBlock(MapColor.METAL, "gold_platter_block"));
     public static final DeferredItem<BlockItem> gold_platter_block_item = ITEMS.registerSimpleBlockItem("gold_platter_block", gold_platter_block, () -> nonWoodProperties);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GoldPlatterTile>> gold_platter_tile = TILES.register("gold_platter_block", () -> new BlockEntityType<>(GoldPlatterTile::new, gold_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> crimson_platter_block = BLOCKS.register("crimson_platter_block", () -> new PlatterBlock(MapColor.WOOD, "crimson_platter_block"));
     public static final DeferredItem<BlockItem> crimson_platter_block_item = ITEMS.registerSimpleBlockItem("crimson_platter_block", crimson_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrimsonPlatterTile>> crimson_platter_tile = TILES.register("crimson_platter_block", () -> new BlockEntityType<>(CrimsonPlatterTile::new, crimson_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> warped_platter_block = BLOCKS.register("warped_platter_block", () -> new PlatterBlock(MapColor.WOOD, "warped_platter_block"));
     public static final DeferredItem<BlockItem> warped_platter_block_item = ITEMS.registerSimpleBlockItem("warped_platter_block", warped_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WarpedPlatterTile>> warped_platter_tile = TILES.register("warped_platter_block", () -> new BlockEntityType<>(WarpedPlatterTile::new, warped_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> mangrove_platter_block = BLOCKS.register("mangrove_platter_block", () -> new PlatterBlock(MapColor.WOOD, "mangrove_platter_block"));
     public static final DeferredItem<BlockItem> mangrove_platter_block_item = ITEMS.registerSimpleBlockItem("mangrove_platter_block", mangrove_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MangrovePlatterTile>> mangrove_platter_tile = TILES.register("mangrove_platter_block", () -> new BlockEntityType<>(MangrovePlatterTile::new, mangrove_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> bamboo_platter_block = BLOCKS.register("bamboo_platter_block", () -> new PlatterBlock(MapColor.WOOD, "bamboo_platter_block"));
     public static final DeferredItem<BlockItem> bamboo_platter_block_item = ITEMS.registerSimpleBlockItem("bamboo_platter_block", bamboo_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BambooPlatterTile>> bamboo_platter_tile = TILES.register("bamboo_platter_block", () -> new BlockEntityType<>(BambooPlatterTile::new, bamboo_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> cherry_platter_block = BLOCKS.register("cherry_platter_block", () -> new PlatterBlock(MapColor.WOOD, "cherry_platter_block"));
     public static final DeferredItem<BlockItem> cherry_platter_block_item = ITEMS.registerSimpleBlockItem("cherry_platter_block", cherry_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CherryPlatterTile>> cherry_platter_tile = TILES.register("cherry_platter_block", () -> new BlockEntityType<>(CherryPlatterTile::new, cherry_platter_block.get()));
 
     public static final DeferredHolder<Block, Block> pale_oak_platter_block = BLOCKS.register("pale_oak_platter_block", () -> new PlatterBlock(MapColor.WOOD, "pale_oak_platter_block"));
     public static final DeferredItem<BlockItem> pale_oak_platter_block_item = ITEMS.registerSimpleBlockItem("pale_oak_platter_block", pale_oak_platter_block);
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PaleOakPlatterTile>> pale_oak_platter_tile = TILES.register("pale_oak_platter_block", () -> new BlockEntityType<>(PaleOakPlatterTile::new, pale_oak_platter_block.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlatterTile>> platter_tile = TILES.register("platter_tile", () -> new BlockEntityType<>(PlatterTile::new, oak_platter_block.get(), spruce_platter_block.get(), birch_platter_block.get(), jungle_platter_block.get(), acacia_platter_block.get(), dark_oak_platter_block.get(), crimson_platter_block.get(), warped_platter_block.get(), mangrove_platter_block.get(), bamboo_platter_block.get(), cherry_platter_block.get(), pale_oak_platter_block.get()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PersonalPlatterTile>> personal_platter_tile = TILES.register("personal_platter_tile", () -> new BlockEntityType<>(PersonalPlatterTile::new, stone_platter_block.get(), iron_platter_block.get(), gold_platter_block.get()));
 
     public static void init(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);
