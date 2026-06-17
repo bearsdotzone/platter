@@ -149,7 +149,7 @@ dependencies {
 
     // jade_version example: 15.10.0+neoforge
     // Visit https://modrinth.com/mod/jade/versions?l=neoforge to get the latest version
-    implementation "maven.modrinth:jade:26.1.1+neoforge"
+    // implementation "maven.modrinth:jade:26.1.1+neoforge"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
